@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.marketing.coupon.mapper.CouponMapper">
+
+    <resultMap type="com.kk.marketing.coupon.entity.Coupon" id="CouponResult">
+        <result property="couponId" column="coupon_id"/>
+    </resultMap>
+
+    <select id="listCoupon" resultType="com.kk.marketing.coupon.entity.Coupon">
+        select * from t_coupon
+        <where>
+            <if test="params.couponId != null and params.couponId != ''">
+                AND coupon_id = #{params.couponId}
+            </if>
+        </where>
+    </select>
+
+</mapper>
