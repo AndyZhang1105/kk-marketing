@@ -8,17 +8,12 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
 @TableName("t_coupon")
-public class Coupon extends BaseEntity implements Serializable {
+public class Coupon extends BaseEntity {
 
-	@TableId
-	@TableField("coupon_id")
 	private Long couponId;
 
-	@TableField("coupon_name")
 	private String couponName;
 
 }
