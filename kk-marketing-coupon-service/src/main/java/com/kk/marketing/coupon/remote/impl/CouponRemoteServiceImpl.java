@@ -1,6 +1,7 @@
 package com.kk.marketing.coupon.remote.impl;
 
 import com.kk.arch.util.*;
+import com.kk.arch.vo.*;
 import com.kk.marketing.coupon.dto.CouponDto;
 import com.kk.marketing.coupon.entity.Coupon;
 import com.kk.marketing.coupon.remote.CouponRemoteService;
@@ -19,14 +20,14 @@ public class CouponRemoteServiceImpl implements CouponRemoteService {
 
     @Override
     public ResponseData<Boolean> addCoupon(CouponVo couponVo) {
-        return ResponseDataUtils.success(couponService.addCoupon());
+        return ResponseUtils.success(couponService.addCoupon());
     }
 
     @Override
     public ResponseData<List<CouponDto>> listCoupon() {
         Coupon params = new Coupon();
         final List<CouponDto> couponDtoList = BeanUtils.toList(couponService.listCoupon(params), CouponDto.class);
-        return ResponseDataUtils.success(couponDtoList);
+        return ResponseUtils.success(couponDtoList);
     }
 
     @Override
@@ -39,6 +40,6 @@ public class CouponRemoteServiceImpl implements CouponRemoteService {
         PageRespVo<CouponDto> resultPageVo = BeanUtils.toObject(dataPageVo, PageRespVo.class);
         resultPageVo.setList(couponDtoList);
 
-        return ResponseDataUtils.success(resultPageVo);
+        return ResponseUtils.success(resultPageVo);
     }
 }

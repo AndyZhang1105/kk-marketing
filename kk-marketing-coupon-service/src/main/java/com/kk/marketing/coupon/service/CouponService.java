@@ -1,8 +1,8 @@
 package com.kk.marketing.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.kk.arch.util.PageReqVo;
-import com.kk.arch.util.PageRespVo;
+import com.kk.arch.vo.PageReqVo;
+import com.kk.arch.vo.PageRespVo;
 import com.kk.marketing.coupon.entity.Coupon;
 
 import java.util.List;

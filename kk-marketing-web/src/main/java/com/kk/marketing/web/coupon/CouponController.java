@@ -1,14 +1,13 @@
 package com.kk.marketing.web.coupon;
 
-import com.kk.arch.util.PageReqVo;
-import com.kk.arch.util.PageRespVo;
-import com.kk.arch.util.ResponseData;
+import com.kk.arch.vo.PageReqVo;
+import com.kk.arch.vo.PageRespVo;
+import com.kk.arch.vo.ResponseData;
 import com.kk.marketing.coupon.dto.CouponDto;
 import com.kk.marketing.coupon.remote.CouponRemoteService;
 import com.kk.marketing.coupon.vo.CouponVo;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,12 +1,11 @@
 package com.kk.marketing.coupon.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.arch.util.BeanUtils;
 import com.kk.arch.util.DateUtils;
-import com.kk.arch.util.PageReqVo;
-import com.kk.arch.util.PageRespVo;
+import com.kk.arch.vo.PageReqVo;
+import com.kk.arch.vo.PageRespVo;
 import com.kk.marketing.coupon.entity.Coupon;
 import com.kk.marketing.coupon.mapper.CouponMapper;
 import org.springframework.beans.factory.annotation.Autowired;
