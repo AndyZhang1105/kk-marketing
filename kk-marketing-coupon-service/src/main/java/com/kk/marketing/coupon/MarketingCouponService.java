@@ -8,12 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableDubbo
-public class CouponServiceApplication {
+public class MarketingCouponService {
 
-    private static final Logger log = LoggerFactory.getLogger(CouponServiceApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(MarketingCouponService.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(CouponServiceApplication.class, args);
+        SpringApplication.run(MarketingCouponService.class, args);
     }
 
 }
