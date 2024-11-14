@@ -2,20 +2,26 @@ package com.kk.marketing.coupon.remote;
 
 import com.kk.arch.vo.PageReqVo;
 import com.kk.arch.vo.PageRespVo;
-import com.kk.marketing.coupon.dto.CouponDto;
-import com.kk.marketing.coupon.vo.CouponVo;
 import com.kk.arch.vo.ResponseData;
+import com.kk.marketing.coupon.vo.CouponVo;
 
 import java.util.List;
 
 /**
  * 券的管理操作
+ * @author Zal
  */
 public interface CouponRemoteService {
 
     ResponseData<Boolean> addCoupon(CouponVo couponVo);
 
-    ResponseData<List<CouponDto>> listCoupon();
+    ResponseData<Boolean> activate(CouponVo couponVo);
 
-	ResponseData<PageRespVo<CouponDto>> queryPage(PageReqVo<CouponDto> pageReqVo);
+    ResponseData<Boolean> deactivate(CouponVo couponVo);
+
+    ResponseData<Boolean> batchDelete(Long tenantId, List<Long> idList, Long userId);
+
+    ResponseData<List<CouponVo>> listCoupon(Long tenantId);
+
+    ResponseData<PageRespVo<CouponVo>> queryPage(PageReqVo<CouponVo> pageReqVo);
 }

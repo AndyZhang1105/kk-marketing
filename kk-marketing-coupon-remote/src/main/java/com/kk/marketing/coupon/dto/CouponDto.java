@@ -4,16 +4,19 @@ import lombok.*;
 
 import java.io.Serializable;
 
+/**
+ * @author Zal
+ */
 @Data
 @Builder
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class CouponDto implements Serializable {
+public
+class CouponDto extends BaseDto implements Serializable {
 
-	private Long couponId;
-
-	private String couponName;
+    private Long id;
+    private String couponName;
 
 }

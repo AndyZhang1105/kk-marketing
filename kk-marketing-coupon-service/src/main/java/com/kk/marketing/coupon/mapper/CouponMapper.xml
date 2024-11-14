@@ -4,31 +4,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.marketing.coupon.mapper.CouponMapper">
 
-    <insert id="insert">
-        insert into t_coupon(coupon_name) values(#{couponName})
-    </insert>
-
-    <select id="listCoupon" resultType="com.kk.marketing.coupon.entity.Coupon">
-        select * from t_coupon
-        <where>
-            <if test="params.couponId != null and params.couponId != ''">
-                AND coupon_id = #{params.couponId}
-            </if>
-        </where>
-    </select>
-
-    <select id="queryPage" resultType="com.kk.marketing.coupon.entity.Coupon">
+    <sql id="querySql">
         select *
         from t_coupon
         <where>
-            <if test="params.couponId != null and params.couponId != ''">
-                AND coupon_id = #{params.couponId}
+            tenant_id = #{params.tenantId} and deleted = 0
+            <if test="params.id != null and params.id != ''">
+                AND id = #{params.id}
             </if>
             <if test="params.couponName != null and params.couponName != ''">
                 AND coupon_name LIKE concat('%',#{params.couponName},'%')
             </if>
         </where>
-        order by coupon_id
+        order by id desc
+    </sql>
+
+    <select id="queryList" resultType="com.kk.marketing.coupon.entity.Coupon">
+        <include refid="querySql" />
+    </select>
+
+    <select id="queryPage" resultType="com.kk.marketing.coupon.entity.Coupon">
+        <include refid="querySql" />
     </select>
 
 </mapper>

@@ -1,19 +1,65 @@
 package com.kk.marketing.coupon.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
+import java.util.Date;
 
+/**
+ * @author Zal
+ */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("t_coupon")
-public class Coupon extends BaseEntity {
+public
+class Coupon extends BaseEntity {
 
-	private Long couponId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
-	private String couponName;
+    private String couponName;
+    private Integer useType;
+    private Integer couponType;
+    private String imageUrl;
+    private Integer useThreshold;
+    private Integer couponValue;
+    private String usePlatforms;
+    private Integer useScope;
+    private Integer storeType;
+    private Integer usableTimeType;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date usableStartTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date usableEndTime;
+
+    private Integer usableFixedStart;
+    private Integer usableFixedDay;
+    private Integer periodType;
+    private String periodWeeks;
+    private Integer periodTimeSegments;
+    private Integer shareableActivities;
+    private Integer isTransferable;
+    private Integer useInstruction;
+    private Integer numberTotal;
+    private Integer stockWarnEnabled;
+    private Integer stockSafeQuantity;
+    private String stockMsgPhone;
+    private Integer distributeLimitType;
+    private Integer distributeLimitNumber;
+    private Integer distributeScanLimitNumber;
+    private Integer activeStatus;
+    private Integer status;
+    private Integer consumePeriodLimitType;
+    private Integer consumePeriodLimitNumber;
+    private Integer consumeOrderUseLimit;
+    private Integer consumeStackingUseType;
+    private Integer recycleAfterRefund;
+    private String shortDesc;
 
 }

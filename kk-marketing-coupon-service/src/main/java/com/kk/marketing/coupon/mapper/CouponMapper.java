@@ -7,9 +7,13 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author Zal
+ */
 public interface CouponMapper extends BaseMapper<Coupon> {
 
-	List<Coupon> listCoupon(@Param("params") Coupon params);
+    List<Coupon> queryList(@Param("params") Coupon params);
 
-	List<Coupon> queryPage(IPage<Coupon> page, @Param("params") Coupon params);
+    List<Coupon> queryPage(IPage<Coupon> page, @Param("params") Coupon params);
+
 }
