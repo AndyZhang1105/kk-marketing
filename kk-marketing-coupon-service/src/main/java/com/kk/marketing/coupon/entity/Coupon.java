@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -14,9 +16,10 @@ import java.util.Date;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("t_coupon")
-public
-class Coupon extends BaseEntity {
+public class Coupon extends BaseEntity {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
@@ -33,13 +36,14 @@ class Coupon extends BaseEntity {
     private Integer usableTimeType;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date usableStartTime;
+    private Date usableFixedStart;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date usableEndTime;
+    private Date usableFixedEnd;
 
-    private Integer usableFixedStart;
-    private Integer usableFixedDay;
+    private Integer usableFlexFrom;
+    private Integer usableFlexDay;
+
     private Integer periodType;
     private String periodWeeks;
     private Integer periodTimeSegments;

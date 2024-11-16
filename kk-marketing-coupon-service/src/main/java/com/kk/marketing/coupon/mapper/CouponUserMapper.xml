@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.marketing.coupon.mapper.CouponUserMapper">
+
+    <sql id="querySql">
+        select *
+        from t_coupon_user
+        <where>
+            tenant_id = #{params.tenantId} and deleted = 0
+            <if test="params.id != null and params.id != ''">
+                AND id = #{params.id}
+            </if>
+            <if test="params.couponCode != null and params.couponCode != ''">
+                AND coupon_code = #{params.couponCode}
+            </if>
+        </where>
+        order by id desc
+    </sql>
+
+    <select id="queryList" resultType="com.kk.marketing.coupon.entity.CouponUser">
+        <include refid="querySql" />
+    </select>
+
+    <select id="queryPage" resultType="com.kk.marketing.coupon.entity.CouponUser">
+        <include refid="querySql" />
+    </select>
+
+</mapper>

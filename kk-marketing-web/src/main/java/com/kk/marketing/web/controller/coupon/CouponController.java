@@ -4,7 +4,7 @@ import com.kk.arch.util.CollectionUtils;
 import com.kk.arch.vo.PageReqVo;
 import com.kk.arch.vo.PageRespVo;
 import com.kk.arch.vo.ResponseData;
-import com.kk.marketing.coupon.remote.CouponRemoteService;
+import com.kk.marketing.coupon.remote.CouponCrudRemote;
 import com.kk.marketing.coupon.vo.CouponVo;
 import com.kk.marketing.web.controller.BaseController;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,19 +27,19 @@ import java.util.Objects;
 public class CouponController extends BaseController {
 
     @DubboReference(lazy = true)
-    private CouponRemoteService couponRemoteService;
+    private CouponCrudRemote couponCrudRemote;
 
     @PostMapping("/addCoupon")
     public ResponseData<Boolean> addCoupon(HttpServletRequest request, @RequestBody @Validated CouponVo couponVo) {
         couponVo.setTenantId(getTenantId(request));
         couponVo.setCreateBy(getUserId(request));
-        return couponRemoteService.addCoupon(couponVo);
+        return couponCrudRemote.addCoupon(couponVo);
     }
 
     @PostMapping("/batchDelete")
     public ResponseData<Boolean> batchDelete(HttpServletRequest request, @RequestBody @Validated List<Long> idList) {
         Assert.isTrue(CollectionUtils.isNotEmpty(idList), "要删除的id列表不能为空");
-        return couponRemoteService.batchDelete(getTenantId(request), idList, getUserId(request));
+        return couponCrudRemote.batchDelete(getTenantId(request), idList, getUserId(request));
     }
 
     @PostMapping("/activate")
@@ -47,7 +47,7 @@ public class CouponController extends BaseController {
         couponVo.setTenantId(getTenantId(request));
         couponVo.setUpdateBy(getUserId(request));
         Assert.isTrue(Objects.nonNull(couponVo.getId()), "要启用的id不能为空");
-        return couponRemoteService.activate(couponVo);
+        return couponCrudRemote.activate(couponVo);
     }
 
     @PostMapping("/deactivate")
@@ -55,18 +55,18 @@ public class CouponController extends BaseController {
         couponVo.setTenantId(getTenantId(request));
         couponVo.setUpdateBy(getUserId(request));
         Assert.isTrue(Objects.nonNull(couponVo.getId()), "要禁用的id不能为空");
-        return couponRemoteService.deactivate(couponVo);
+        return couponCrudRemote.deactivate(couponVo);
     }
 
     @PostMapping("/listCoupon")
     public ResponseData<List<CouponVo>> listCoupon(HttpServletRequest request) {
-        return couponRemoteService.listCoupon(getTenantId(request));
+        return couponCrudRemote.listCoupon(getTenantId(request));
     }
 
     @PostMapping("/queryPage")
     public ResponseData<PageRespVo<CouponVo>> queryPage(HttpServletRequest request, @RequestBody @Validated PageReqVo<CouponVo> pageReqVo) {
         pageReqVo.getParam().setTenantId(getTenantId(request));
-        return couponRemoteService.queryPage(pageReqVo);
+        return couponCrudRemote.queryPage(pageReqVo);
     }
 
 }

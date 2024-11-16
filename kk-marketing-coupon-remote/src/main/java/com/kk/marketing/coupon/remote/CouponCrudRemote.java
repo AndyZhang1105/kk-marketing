@@ -11,7 +11,7 @@ import java.util.List;
  * 券的管理操作
  * @author Zal
  */
-public interface CouponRemoteService {
+public interface CouponCrudRemote {
 
     ResponseData<Boolean> addCoupon(CouponVo couponVo);
 

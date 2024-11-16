@@ -6,7 +6,7 @@ import com.kk.arch.vo.PageReqVo;
 import com.kk.arch.vo.PageRespVo;
 import com.kk.arch.vo.ResponseData;
 import com.kk.marketing.coupon.entity.Coupon;
-import com.kk.marketing.coupon.remote.CouponRemoteService;
+import com.kk.marketing.coupon.remote.CouponCrudRemote;
 import com.kk.marketing.coupon.service.CouponService;
 import com.kk.marketing.coupon.vo.CouponVo;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -22,7 +22,7 @@ import java.util.Optional;
  * @author Zal
  */
 @DubboService
-public class CouponRemoteServiceImpl implements CouponRemoteService {
+public class CouponCrudRemoteImpl implements CouponCrudRemote {
 
     @Autowired
     private CouponService couponService;

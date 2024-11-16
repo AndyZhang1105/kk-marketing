@@ -33,13 +33,14 @@ public class CouponVo extends BaseVo implements Serializable {
     private Integer usableTimeType;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date usableStartTime;
+    private Date usableFixedStart;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date usableEndTime;
+    private Date usableFixedEnd;
 
-    private Integer usableFixedStart;
+    private Integer usableFlexFrom;
     private Integer usableFixedDay;
+    
     private Integer periodType;
     private String periodWeeks;
     private Integer periodTimeSegments;

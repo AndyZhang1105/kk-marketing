@@ -1,5 +1,6 @@
 package com.kk.marketing.coupon.service;
 
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,7 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.kk.arch.constants.CommonConstants.NO;
 import static com.kk.arch.constants.CommonConstants.YES;
@@ -76,6 +80,19 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
     public List<Coupon> queryList(CouponVo couponVo) {
         final Coupon coupon = BeanUtils.toObject(couponVo, Coupon.class);
         return couponMapper.queryList(coupon);
+    }
+
+    @Override
+    public List<Coupon> queryList(Long tenantId, List<Long> idList) {
+        return new LambdaQueryChainWrapper<>(couponMapper)
+                .eq(Coupon::getTenantId, tenantId)
+                .in(Coupon::getId, idList)
+                .list();
+    }
+
+    @Override
+    public Map<Long, Coupon> queryMap(Long tenantId, List<Long> idList) {
+        return queryList(tenantId, idList).stream().collect(Collectors.toMap(Coupon::getId, Function.identity(), (f, s) -> f));
     }
 
     @Override

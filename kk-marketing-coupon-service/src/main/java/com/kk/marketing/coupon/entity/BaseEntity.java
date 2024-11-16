@@ -2,7 +2,10 @@ package com.kk.marketing.coupon.entity;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
@@ -11,6 +14,9 @@ import java.util.Date;
  * @author Zal
  */
 @Data
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaseEntity {
 
     private Long tenantId;
