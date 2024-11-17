@@ -2,8 +2,8 @@ package com.kk.marketing.coupon.remote.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
-import com.kk.arch.util.*;
-import com.kk.arch.vo.ResponseData;
+import com.kk.arch.common.util.*;
+import com.kk.arch.common.vo.ResponseData;
 import com.kk.marketing.coupon.aop.DistributedLock;
 import com.kk.marketing.coupon.entity.Coupon;
 import com.kk.marketing.coupon.entity.CouponUser;
@@ -11,7 +11,8 @@ import com.kk.marketing.coupon.enums.ActiveStatusEnum;
 import com.kk.marketing.coupon.enums.CouponUserStatusEnum;
 import com.kk.marketing.coupon.enums.UsableTimeTypeEnum;
 import com.kk.marketing.coupon.remote.CouponDistributionRemote;
-import com.kk.marketing.coupon.req.DistributeCouponReqDto;
+import com.kk.marketing.coupon.req.CouponDistributeDetailReqDto;
+import com.kk.marketing.coupon.req.CouponDistributionReqDto;
 import com.kk.marketing.coupon.resp.DistributeCouponUserRespDto;
 import com.kk.marketing.coupon.service.CouponDataService;
 import com.kk.marketing.coupon.service.CouponService;
@@ -24,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static com.kk.marketing.coupon.req.DistributeCouponReqDto.MODE_TOLERANT;
+import static com.kk.marketing.coupon.req.CouponDistributionReqDto.MODE_TOLERANT;
 
 /**
  * @author Zal
@@ -41,8 +42,8 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
     @Autowired
     private CouponUserService couponUserService;
 
-    protected void checkCoupon(DistributeCouponReqDto reqDto) {
-        final List<Long> couponIdList = reqDto.getCouponList().stream().map(DistributeCouponReqDto.CouponDto::getCouponId).distinct().toList();
+    protected void checkCoupon(CouponDistributionReqDto reqDto) {
+        final List<Long> couponIdList = reqDto.getCouponList().stream().map(CouponDistributeDetailReqDto::getCouponId).distinct().toList();
         final Map<Long, Coupon> couponMap = couponService.queryMap(reqDto.getTenantId(), couponIdList);
         AssertUtils.isTrue(reqDto.getCouponList().size() == couponMap.size(), "有券未找到，发券失败");
 
@@ -50,20 +51,20 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
         AssertUtils.isTrue(CollectionUtils.isEmpty(statusNotOpenIdList), "券" + JSON.toJSONString(statusNotOpenIdList) + "未启用，发券失败");
     }
 
-    protected void checkStock(DistributeCouponReqDto reqDto) {
+    protected void checkStock(CouponDistributionReqDto reqDto) {
         if (reqDto.getMode() == MODE_TOLERANT) {
             return;
         }
 
-        for (DistributeCouponReqDto.CouponDto distributeCouponReqDto : reqDto.getCouponList()) {
+        for (CouponDistributeDetailReqDto distributeCouponReqDto : reqDto.getCouponList()) {
             final int couponStock = couponDataService.getCouponStock(reqDto.getTenantId(), distributeCouponReqDto.getCouponId());
             final int shouldDistributeCouponNum = distributeCouponReqDto.getNum() * reqDto.getUserIdList().size();
             AssertUtils.isTrue(couponStock >= shouldDistributeCouponNum, "券[" + distributeCouponReqDto.getCouponId() + "]库存不足，发券失败");
         }
     }
 
-    protected void deductStock(DistributeCouponReqDto reqDto) {
-        for (DistributeCouponReqDto.CouponDto distributeCouponReqDto : reqDto.getCouponList()) {
+    protected void deductStock(CouponDistributionReqDto reqDto) {
+        for (CouponDistributeDetailReqDto distributeCouponReqDto : reqDto.getCouponList()) {
             final boolean deductResult = couponDataService.deductStock(reqDto.getTenantId(), distributeCouponReqDto.getCouponId(), distributeCouponReqDto.getNum());
             AssertUtils.isTrue(deductResult, "券[" + distributeCouponReqDto.getCouponId() + "]库存扣减出错，发券失败");
         }
@@ -88,19 +89,33 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
     /**
      * 按用户userId来循环发放券
      */
-    protected List<CouponUser> saveCouponUser(DistributeCouponReqDto reqDto) {
-        final List<Long> couponIdList = reqDto.getCouponList().stream().map(DistributeCouponReqDto.CouponDto::getCouponId).distinct().toList();
+    protected List<CouponUser> saveCouponUser(CouponDistributionReqDto reqDto) {
+        final List<Long> couponIdList = reqDto.getCouponList().stream().map(CouponDistributeDetailReqDto::getCouponId).distinct().toList();
         final Map<Long, Coupon> couponMap = couponService.queryMap(reqDto.getTenantId(), couponIdList);
 
         List<CouponUser> couponUserList = Lists.newArrayList();
-        for (Long userId : reqDto.getUserIdList()) {
-            for (DistributeCouponReqDto.CouponDto distributeCouponReqDto : reqDto.getCouponList()) {
+        reqDto.getUserIdList().forEach(userId -> {
+            for (CouponDistributeDetailReqDto distributeCouponReqDto : reqDto.getCouponList()) {
                 for (int i = 0; i < distributeCouponReqDto.getNum(); i++) {
-                    final CouponUser couponUser = CouponUser.builder().tenantId(reqDto.getTenantId()).couponCode(SnowflakeIdUtils.generateId().toString()).couponId(distributeCouponReqDto.getCouponId()).sourceActivityType(reqDto.getSourceActivityType()).sourceActivityId(reqDto.getSourceActivityId()).sourceActivityName(reqDto.getSourceActivityName()).sourceStoreId(reqDto.getSourceStoreId()).sourceStoreName(reqDto.getSourceStoreName()).sourceOrderNbr(reqDto.getSourceOrderNbr()).usableStartTime(this.calculateUsableStartTime(couponMap.get(distributeCouponReqDto.getCouponId()))).usableEndTime(this.calculateUsableEndTime(couponMap.get(distributeCouponReqDto.getCouponId()))).userId(userId).status(CouponUserStatusEnum.UNUSED.getCode()).build();
+                    final CouponUser couponUser = CouponUser.builder()
+                            .tenantId(reqDto.getTenantId())
+                            .couponCode(SnowflakeIdUtils.generateId().toString())
+                            .couponId(distributeCouponReqDto.getCouponId())
+                            .sourceActivityType(reqDto.getSourceActivityType())
+                            .sourceActivityId(reqDto.getSourceActivityId())
+                            .sourceActivityName(reqDto.getSourceActivityName())
+                            .sourceStoreId(reqDto.getSourceStoreId())
+                            .sourceStoreName(reqDto.getSourceStoreName())
+                            .sourceOrderNbr(reqDto.getSourceOrderNbr())
+                            .usableStartTime(this.calculateUsableStartTime(couponMap.get(distributeCouponReqDto.getCouponId())))
+                            .usableEndTime(this.calculateUsableEndTime(couponMap.get(distributeCouponReqDto.getCouponId())))
+                            .userId(userId)
+                            .status(CouponUserStatusEnum.UNUSED.getCode())
+                            .build();
                     couponUserList.add(couponUser);
                 }
             }
-        }
+        });
 
         final boolean saveResult = couponUserService.saveBatch(couponUserList);
         AssertUtils.isTrue(saveResult, "用户券保存出错，发券失败");
@@ -114,9 +129,9 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
     @Override
     @Transactional
     @DistributedLock(key = "'syncDistributeCoupon_'+#reqDto.getTenantId()")
-    public ResponseData<List<DistributeCouponUserRespDto>> syncDistributeCoupon(DistributeCouponReqDto reqDto) {
+    public ResponseData<List<DistributeCouponUserRespDto>> syncDistributeCoupon(CouponDistributionReqDto reqDto) {
         // 1. 先检查参数
-        final long couponIdCount = reqDto.getCouponList().stream().map(DistributeCouponReqDto.CouponDto::getCouponId).distinct().count();
+        final long couponIdCount = reqDto.getCouponList().stream().map(CouponDistributeDetailReqDto::getCouponId).distinct().count();
         AssertUtils.isTrue(reqDto.getCouponList().size() == couponIdCount, "券列表有重复的券id，请检查是否重复发放");
 
         // 2. 再检查券的状态和时间范围
@@ -131,7 +146,7 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
         // 4. 发券到会员用户
         List<CouponUser> couponUserList = this.saveCouponUser(reqDto);
 
-        return ResponseUtils.success(BeanUtils.toList(couponUserList, DistributeCouponUserRespDto.class));
+        return ResponseUtils.success(JsonUtils.toList(couponUserList, DistributeCouponUserRespDto.class));
     }
 
     /**
@@ -140,9 +155,9 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
     @Override
     @Transactional
     @DistributedLock(key = "'syncDistributeCoupon_'+#reqDto.getTenantId()")
-    public ResponseData<Boolean> asyncDistributeCoupon(DistributeCouponReqDto reqDto) {
+    public ResponseData<Boolean> asyncDistributeCoupon(CouponDistributionReqDto reqDto) {
         // 1. 先检查参数
-        final long couponIdCount = reqDto.getCouponList().stream().map(DistributeCouponReqDto.CouponDto::getCouponId).distinct().count();
+        final long couponIdCount = reqDto.getCouponList().stream().map(CouponDistributeDetailReqDto::getCouponId).distinct().count();
         AssertUtils.isTrue(reqDto.getCouponList().size() == couponIdCount, "券列表有重复的券id，请检查是否重复发放");
 
         // 2. 再检查库查是不是足够
@@ -158,7 +173,7 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
     }
 
     @Override
-    public void sendCouponUserForMq(DistributeCouponReqDto reqDto) {
+    public void sendCouponUserForMq(CouponDistributionReqDto reqDto) {
         this.saveCouponUser(reqDto);
     }
 

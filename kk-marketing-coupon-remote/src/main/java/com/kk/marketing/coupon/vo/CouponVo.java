@@ -2,6 +2,8 @@ package com.kk.marketing.coupon.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -21,7 +23,11 @@ import java.util.Date;
 @JsonIgnoreProperties
 public class CouponVo extends BaseVo implements Serializable {
     private Long id;
+
+    @NotBlank(message = "券名称不能为空")
+    @Size(min = 1, max = 30, message = "券名称不能超过30个字符")
     private String couponName;
+
     private Integer useType;
     private Integer couponType;
     private String imageUrl;
@@ -40,7 +46,7 @@ public class CouponVo extends BaseVo implements Serializable {
 
     private Integer usableFlexFrom;
     private Integer usableFixedDay;
-    
+
     private Integer periodType;
     private String periodWeeks;
     private Integer periodTimeSegments;

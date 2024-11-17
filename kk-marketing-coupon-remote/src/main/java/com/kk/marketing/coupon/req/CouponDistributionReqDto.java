@@ -1,11 +1,10 @@
 package com.kk.marketing.coupon.req;
 
-
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class DistributeCouponReqDto implements Serializable {
+public class CouponDistributionReqDto implements Serializable {
 
     public static final int MODE_TOLERANT = 0;
     public static final int MODE_STRICT = 1;
@@ -26,7 +25,7 @@ public class DistributeCouponReqDto implements Serializable {
     /**
      * 租户id
      */
-    @NotEmpty(message = "租户id不能为空")
+    @NotNull(message = "租户id不能为空")
     private Long tenantId;
 
     /**
@@ -41,50 +40,34 @@ public class DistributeCouponReqDto implements Serializable {
      */
     @NotEmpty(message = "发放的券列表不能为空")
     @Size(min = 1, max = 10, message = "同一批次发券不能超过10种券")
-    private List<CouponDto> couponList;
+    private List<CouponDistributeDetailReqDto> couponList;
 
     /**
      * 模式，0非严格模式， 1严格模式（必须全部发券成功才可以，否则发券失败）
      */
-    @NotEmpty(message = "发券的模式")
+    @NotNull(message = "发券的模式")
     private Integer mode = MODE_TOLERANT;
 
-    @NotEmpty(message = "来源的营销活动类型")
+    @NotNull(message = "来源的营销活动类型")
     private Integer sourceActivityType;
 
-    @NotEmpty(message = "来源的营销活动Id")
+    @NotNull(message = "来源的营销活动Id")
     private Integer sourceActivityId;
 
-    @NotEmpty(message = "来源的营销活动名称")
+    @NotNull(message = "来源的营销活动名称")
     private String sourceActivityName;
 
-    @NotEmpty(message = "来源的门店id")
+    @NotNull(message = "来源的门店id")
     private Long sourceStoreId;
 
-    @NotEmpty(message = "来源的门店名称")
+    @NotNull(message = "来源的门店名称")
     private String sourceStoreName;
 
-    @NotEmpty(message = "来源的订单编号")
+    @NotNull(message = "来源的订单编号")
     private String sourceOrderNbr;
 
-    @NotEmpty(message = "操作人")
+    @NotNull(message = "操作人")
     private Long operatorId;
 
-    @Data
-    @Builder
-    @ToString
-    @EqualsAndHashCode(callSuper = false)
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class CouponDto implements Serializable {
-
-        @NotNull(message = "发放的券id不能为空")
-        private Long couponId;
-
-        @NotNull(message = "发放的券数量不能为空")
-        @Size(min = 1, max = 100, message = "同一批次发券的单种券不能超过100张")
-        private Integer num;
-
-    }
 
 }

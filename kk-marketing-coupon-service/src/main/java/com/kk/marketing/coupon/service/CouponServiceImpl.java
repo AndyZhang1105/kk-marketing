@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.kk.arch.util.AssertUtils;
-import com.kk.arch.util.BeanUtils;
-import com.kk.arch.vo.PageReqVo;
-import com.kk.arch.vo.PageRespVo;
+import com.kk.arch.common.util.AssertUtils;
+import com.kk.arch.common.util.JsonUtils;
+import com.kk.arch.common.vo.PageReqVo;
+import com.kk.arch.common.vo.PageRespVo;
 import com.kk.marketing.coupon.entity.Coupon;
 import com.kk.marketing.coupon.mapper.CouponMapper;
 import com.kk.marketing.coupon.vo.CouponVo;
@@ -21,8 +21,9 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.kk.arch.constants.CommonConstants.NO;
-import static com.kk.arch.constants.CommonConstants.YES;
+import static com.kk.arch.common.constants.CommonConstants.NO;
+import static com.kk.arch.common.constants.CommonConstants.YES;
+
 
 /**
  * @author Zal
@@ -35,7 +36,7 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
 
     @Override
     public Boolean addCoupon(CouponVo couponVo) {
-        Coupon coupon = BeanUtils.toObject(couponVo, Coupon.class);
+        Coupon coupon = JsonUtils.toObject(couponVo, Coupon.class);
         return this.save(coupon);
     }
 
@@ -78,7 +79,7 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
 
     @Override
     public List<Coupon> queryList(CouponVo couponVo) {
-        final Coupon coupon = BeanUtils.toObject(couponVo, Coupon.class);
+        final Coupon coupon = JsonUtils.toObject(couponVo, Coupon.class);
         return couponMapper.queryList(coupon);
     }
 
@@ -98,7 +99,7 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
     @Override
     public PageRespVo<Coupon> queryPage(PageReqVo<Coupon> pageReqVo) {
         Page<Coupon> page = new Page<>(pageReqVo.getPageNum(), pageReqVo.getPageSize());
-        final Coupon coupon = BeanUtils.toObject(pageReqVo.getParam(), Coupon.class);
+        final Coupon coupon = JsonUtils.toObject(pageReqVo.getParam(), Coupon.class);
         List<Coupon> resultList = couponMapper.queryPage(page, coupon);
         return new PageRespVo<>(page.getTotal(), page.getCurrent(), page.getSize(), resultList);
     }

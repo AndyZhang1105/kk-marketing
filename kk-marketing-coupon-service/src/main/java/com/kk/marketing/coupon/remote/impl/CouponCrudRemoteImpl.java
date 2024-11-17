@@ -1,10 +1,10 @@
 package com.kk.marketing.coupon.remote.impl;
 
-import com.kk.arch.util.BeanUtils;
-import com.kk.arch.util.ResponseUtils;
-import com.kk.arch.vo.PageReqVo;
-import com.kk.arch.vo.PageRespVo;
-import com.kk.arch.vo.ResponseData;
+import com.kk.arch.common.util.JsonUtils;
+import com.kk.arch.common.util.ResponseUtils;
+import com.kk.arch.common.vo.PageReqVo;
+import com.kk.arch.common.vo.PageRespVo;
+import com.kk.arch.common.vo.ResponseData;
 import com.kk.marketing.coupon.entity.Coupon;
 import com.kk.marketing.coupon.remote.CouponCrudRemote;
 import com.kk.marketing.coupon.service.CouponService;
@@ -57,18 +57,18 @@ public class CouponCrudRemoteImpl implements CouponCrudRemote {
     public ResponseData<List<CouponVo>> listCoupon(Long tenantId) {
         CouponVo couponVo = new CouponVo();
         couponVo.setTenantId(tenantId);
-        final List<CouponVo> couponDtoList = BeanUtils.toList(couponService.queryList(couponVo), CouponVo.class);
+        final List<CouponVo> couponDtoList = JsonUtils.toList(couponService.queryList(couponVo), CouponVo.class);
         return ResponseUtils.success(couponDtoList);
     }
 
     @Override
     public ResponseData<PageRespVo<CouponVo>> queryPage(PageReqVo<CouponVo> pageReqVo) {
-        final Coupon entityParam = BeanUtils.toObject(pageReqVo.getParam(), Coupon.class);
+        final Coupon entityParam = JsonUtils.toObject(pageReqVo.getParam(), Coupon.class);
         PageReqVo<Coupon> newReqVo = PageReqVo.of(pageReqVo.getPageNum(), pageReqVo.getPageSize(), entityParam);
         final PageRespVo<Coupon> dataPageVo = couponService.queryPage(newReqVo);
 
-        final List<CouponVo> couponVoList = BeanUtils.toList(dataPageVo.getList(), CouponVo.class);
-        PageRespVo<CouponVo> resultPageVo = BeanUtils.toObject(dataPageVo, PageRespVo.class);
+        final List<CouponVo> couponVoList = JsonUtils.toList(dataPageVo.getList(), CouponVo.class);
+        PageRespVo<CouponVo> resultPageVo = JsonUtils.toObject(dataPageVo, PageRespVo.class);
         resultPageVo.setList(couponVoList);
 
         return ResponseUtils.success(resultPageVo);

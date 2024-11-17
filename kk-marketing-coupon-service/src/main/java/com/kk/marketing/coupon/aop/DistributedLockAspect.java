@@ -1,6 +1,6 @@
 package com.kk.marketing.coupon.aop;
 
-import com.kk.arch.util.AspectUtils;
+import com.kk.arch.common.util.AspectUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -18,6 +18,7 @@ import static java.lang.Thread.sleep;
 
 /**
  * 分布式锁注解切面
+ *
  * @author Zal
  */
 @Slf4j

@@ -3,9 +3,9 @@ package com.kk.marketing.coupon.service;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.kk.arch.util.BeanUtils;
-import com.kk.arch.vo.PageReqVo;
-import com.kk.arch.vo.PageRespVo;
+import com.kk.arch.common.util.JsonUtils;
+import com.kk.arch.common.vo.PageReqVo;
+import com.kk.arch.common.vo.PageRespVo;
 import com.kk.marketing.coupon.entity.CouponUser;
 import com.kk.marketing.coupon.mapper.CouponUserMapper;
 import com.kk.marketing.coupon.vo.CouponUserVo;
@@ -36,7 +36,7 @@ public class CouponUserServiceImpl extends ServiceImpl<CouponUserMapper, CouponU
 
     @Override
     public List<CouponUser> queryList(CouponUserVo couponUserVo) {
-        final CouponUser couponUser = BeanUtils.toObject(couponUserVo, CouponUser.class);
+        final CouponUser couponUser = JsonUtils.toObject(couponUserVo, CouponUser.class);
         return couponUserMapper.queryList(couponUser);
     }
 
@@ -56,7 +56,7 @@ public class CouponUserServiceImpl extends ServiceImpl<CouponUserMapper, CouponU
     @Override
     public PageRespVo<CouponUser> queryPage(PageReqVo<CouponUser> pageReqVo) {
         Page<CouponUser> page = new Page<>(pageReqVo.getPageNum(), pageReqVo.getPageSize());
-        final CouponUser couponUser = BeanUtils.toObject(pageReqVo.getParam(), CouponUser.class);
+        final CouponUser couponUser = JsonUtils.toObject(pageReqVo.getParam(), CouponUser.class);
         List<CouponUser> resultList = couponUserMapper.queryPage(page, couponUser);
         return new PageRespVo<>(page.getTotal(), page.getCurrent(), page.getSize(), resultList);
     }

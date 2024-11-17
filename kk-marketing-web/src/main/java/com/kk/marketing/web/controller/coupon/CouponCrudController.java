@@ -1,9 +1,10 @@
 package com.kk.marketing.web.controller.coupon;
 
-import com.kk.arch.util.CollectionUtils;
-import com.kk.arch.vo.PageReqVo;
-import com.kk.arch.vo.PageRespVo;
-import com.kk.arch.vo.ResponseData;
+
+import com.kk.arch.common.util.CollectionUtils;
+import com.kk.arch.common.vo.PageReqVo;
+import com.kk.arch.common.vo.PageRespVo;
+import com.kk.arch.common.vo.ResponseData;
 import com.kk.marketing.coupon.remote.CouponCrudRemote;
 import com.kk.marketing.coupon.vo.CouponVo;
 import com.kk.marketing.web.controller.BaseController;
@@ -24,7 +25,7 @@ import java.util.Objects;
  */
 @RequestMapping("/marketing/web/coupon")
 @RestController
-public class CouponController extends BaseController {
+public class CouponCrudController extends BaseController {
 
     @DubboReference(lazy = true)
     private CouponCrudRemote couponCrudRemote;
