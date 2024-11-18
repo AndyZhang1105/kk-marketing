@@ -4,16 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 券可用时间类型，0固定时段，1自领取后按天算
- *
  * @author Zal
+ * 可使用时段类型，0全部时段，1部分时段
  */
 @AllArgsConstructor
 @Getter
-public enum UsableTimeTypeEnum {
-
-    FIXED(0, "固定时间段"),
-    FLEX(1, "自领取后按天算");
+public enum PeriodTypeEnum {
+    ALL(0, "全部时段"),
+    PART(1, "部分时段");
 
     private int code;
     private String desc;
@@ -21,12 +19,13 @@ public enum UsableTimeTypeEnum {
     /**
      * 从code值获取对应的枚举
      */
-    public static UsableTimeTypeEnum getByCode(int code) {
-        for (UsableTimeTypeEnum typeEnum : UsableTimeTypeEnum.values()) {
+    public static PeriodTypeEnum getByCode(int code) {
+        for (PeriodTypeEnum typeEnum : PeriodTypeEnum.values()) {
             if (typeEnum.getCode() == code) {
                 return typeEnum;
             }
         }
         return null;
     }
+
 }

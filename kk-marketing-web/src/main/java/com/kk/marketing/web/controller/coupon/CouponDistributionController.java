@@ -37,8 +37,15 @@ public class CouponDistributionController extends BaseController {
         CouponDistributionReqDto reqDto = CouponDistributionReqDto.builder()
                 .couponList(JsonUtils.toList(reqVo.getCouponList(), CouponDistributeDetailReqDto.class))
                 .userIdList(reqVo.getUserIdList())
-                .sourceStoreId(reqVo.getSourceStoreId())
                 .mode(MODE_STRICT)
+                .tenantId(getTenantId())
+                .sourceActivityType(0)
+                .sourceActivityId(0)
+                .sourceActivityName("")
+                .sourceOrderNbr("")
+                .sourceStoreId(reqVo.getSourceStoreId())
+                .sourceStoreName(getStoreName(reqVo.getSourceStoreId()))
+                .operatorId(0L)
                 .build();
         ResponseData<List<DistributeCouponUserRespDto>> responseData = couponDistributionRemote.syncDistributeCoupon(reqDto);
         return responseData.getCode() == ResponseData.SUCCESS ? ResponseUtils.success(true) : ResponseUtils.fail(responseData.getMsg());

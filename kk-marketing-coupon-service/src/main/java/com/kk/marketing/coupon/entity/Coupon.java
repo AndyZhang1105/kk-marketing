@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import java.util.Date;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("t_coupon")
@@ -46,10 +48,10 @@ public class Coupon extends BaseEntity {
 
     private Integer periodType;
     private String periodWeeks;
-    private Integer periodTimeSegments;
-    private Integer shareableActivities;
+    private String periodTimeSegments;
+    private String shareableActivities;
     private Integer isTransferable;
-    private Integer useInstruction;
+    private String useInstruction;
     private Integer numberTotal;
     private Integer stockWarnEnabled;
     private Integer stockSafeQuantity;

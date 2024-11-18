@@ -1,14 +1,19 @@
 package com.kk.marketing.web.controller.coupon;
 
-
 import com.kk.arch.common.util.CollectionUtils;
+import com.kk.arch.common.util.JsonUtils;
 import com.kk.arch.common.vo.PageReqVo;
 import com.kk.arch.common.vo.PageRespVo;
 import com.kk.arch.common.vo.ResponseData;
 import com.kk.marketing.coupon.remote.CouponCrudRemote;
+import com.kk.marketing.coupon.req.ActiveStatusUpdateReqDto;
+import com.kk.marketing.coupon.req.CouponAddReqDto;
+import com.kk.marketing.coupon.req.CouponQueryReqDto;
 import com.kk.marketing.coupon.vo.CouponVo;
 import com.kk.marketing.web.controller.BaseController;
-import jakarta.servlet.http.HttpServletRequest;
+import com.kk.marketing.web.req.ActiveStatusUpdateReqVo;
+import com.kk.marketing.web.req.CouponAddReqVo;
+import com.kk.marketing.web.req.CouponQueryReqVo;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
@@ -31,43 +36,49 @@ public class CouponCrudController extends BaseController {
     private CouponCrudRemote couponCrudRemote;
 
     @PostMapping("/addCoupon")
-    public ResponseData<Boolean> addCoupon(HttpServletRequest request, @RequestBody @Validated CouponVo couponVo) {
-        couponVo.setTenantId(getTenantId(request));
-        couponVo.setCreateBy(getUserId(request));
-        return couponCrudRemote.addCoupon(couponVo);
+    public ResponseData<Boolean> addCoupon(@RequestBody @Validated CouponAddReqVo reqVo) {
+        final CouponAddReqDto reqDto = JsonUtils.toObject(reqVo, CouponAddReqDto.class);
+        reqDto.setTenantId(getTenantId());
+        reqDto.setCreateBy(getUserId());
+        return couponCrudRemote.addCoupon(reqDto);
     }
 
     @PostMapping("/batchDelete")
-    public ResponseData<Boolean> batchDelete(HttpServletRequest request, @RequestBody @Validated List<Long> idList) {
+    public ResponseData<Boolean> batchDelete(@RequestBody @Validated List<Long> idList) {
         Assert.isTrue(CollectionUtils.isNotEmpty(idList), "要删除的id列表不能为空");
-        return couponCrudRemote.batchDelete(getTenantId(request), idList, getUserId(request));
+        return couponCrudRemote.batchDelete(getTenantId(), idList, getUserId());
     }
 
     @PostMapping("/activate")
-    public ResponseData<Boolean> activate(HttpServletRequest request, @RequestBody @Validated CouponVo couponVo) {
-        couponVo.setTenantId(getTenantId(request));
-        couponVo.setUpdateBy(getUserId(request));
-        Assert.isTrue(Objects.nonNull(couponVo.getId()), "要启用的id不能为空");
-        return couponCrudRemote.activate(couponVo);
+    public ResponseData<Boolean> activate(@RequestBody @Validated ActiveStatusUpdateReqVo reqVo) {
+        final ActiveStatusUpdateReqDto reqDto = JsonUtils.toObject(reqVo, ActiveStatusUpdateReqDto.class);
+        reqDto.setTenantId(getTenantId());
+        reqDto.setUpdateBy(getUserId());
+        Assert.isTrue(Objects.nonNull(reqDto.getId()), "要启用的id不能为空");
+        return couponCrudRemote.activate(reqDto);
     }
 
     @PostMapping("/deactivate")
-    public ResponseData<Boolean> deactivate(HttpServletRequest request, @RequestBody @Validated CouponVo couponVo) {
-        couponVo.setTenantId(getTenantId(request));
-        couponVo.setUpdateBy(getUserId(request));
-        Assert.isTrue(Objects.nonNull(couponVo.getId()), "要禁用的id不能为空");
-        return couponCrudRemote.deactivate(couponVo);
+    public ResponseData<Boolean> deactivate(@RequestBody @Validated ActiveStatusUpdateReqVo reqVo) {
+        final ActiveStatusUpdateReqDto reqDto = JsonUtils.toObject(reqVo, ActiveStatusUpdateReqDto.class);
+        reqDto.setTenantId(getTenantId());
+        reqDto.setUpdateBy(getUserId());
+        Assert.isTrue(Objects.nonNull(reqDto.getId()), "要禁用的id不能为空");
+        return couponCrudRemote.deactivate(reqDto);
     }
 
     @PostMapping("/listCoupon")
-    public ResponseData<List<CouponVo>> listCoupon(HttpServletRequest request) {
-        return couponCrudRemote.listCoupon(getTenantId(request));
+    public ResponseData<List<CouponVo>> listCoupon(@RequestBody @Validated CouponQueryReqVo reqVo) {
+        final CouponQueryReqDto reqDto = JsonUtils.toObject(reqVo, CouponQueryReqDto.class);
+        reqDto.setTenantId(getTenantId());
+        return couponCrudRemote.listCoupon(reqDto);
     }
 
     @PostMapping("/queryPage")
-    public ResponseData<PageRespVo<CouponVo>> queryPage(HttpServletRequest request, @RequestBody @Validated PageReqVo<CouponVo> pageReqVo) {
-        pageReqVo.getParam().setTenantId(getTenantId(request));
-        return couponCrudRemote.queryPage(pageReqVo);
+    public ResponseData<PageRespVo<CouponVo>> queryPage(@RequestBody @Validated PageReqVo<CouponQueryReqVo> pageReqVo) {
+        final PageReqVo<CouponQueryReqDto> paramPageReqVo = JsonUtils.toPageReqVo(pageReqVo, CouponQueryReqDto.class);
+        paramPageReqVo.getParam().setTenantId(getTenantId());
+        return couponCrudRemote.queryPage(paramPageReqVo);
     }
 
 }

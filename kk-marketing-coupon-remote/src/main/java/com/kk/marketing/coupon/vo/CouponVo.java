@@ -45,14 +45,14 @@ public class CouponVo extends BaseVo implements Serializable {
     private Date usableFixedEnd;
 
     private Integer usableFlexFrom;
-    private Integer usableFixedDay;
+    private Integer usableFlexDay;
 
     private Integer periodType;
     private String periodWeeks;
-    private Integer periodTimeSegments;
-    private Integer shareableActivities;
+    private String periodTimeSegments;
+    private String shareableActivities;
     private Integer isTransferable;
-    private Integer useInstruction;
+    private String useInstruction;
     private Integer numberTotal;
     private Integer stockWarnEnabled;
     private Integer stockSafeQuantity;

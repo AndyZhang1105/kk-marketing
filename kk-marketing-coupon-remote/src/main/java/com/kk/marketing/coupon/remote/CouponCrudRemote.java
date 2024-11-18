@@ -3,6 +3,9 @@ package com.kk.marketing.coupon.remote;
 import com.kk.arch.common.vo.PageReqVo;
 import com.kk.arch.common.vo.PageRespVo;
 import com.kk.arch.common.vo.ResponseData;
+import com.kk.marketing.coupon.req.ActiveStatusUpdateReqDto;
+import com.kk.marketing.coupon.req.CouponAddReqDto;
+import com.kk.marketing.coupon.req.CouponQueryReqDto;
 import com.kk.marketing.coupon.vo.CouponVo;
 
 import java.util.List;
@@ -14,15 +17,15 @@ import java.util.List;
  */
 public interface CouponCrudRemote {
 
-    ResponseData<Boolean> addCoupon(CouponVo couponVo);
+    ResponseData<Boolean> addCoupon(CouponAddReqDto reqDto);
 
-    ResponseData<Boolean> activate(CouponVo couponVo);
+    ResponseData<Boolean> activate(ActiveStatusUpdateReqDto reqDto);
 
-    ResponseData<Boolean> deactivate(CouponVo couponVo);
+    ResponseData<Boolean> deactivate(ActiveStatusUpdateReqDto reqDto);
 
-    ResponseData<Boolean> batchDelete(Long tenantId, List<Long> idList, Long userId);
+    ResponseData<Boolean> batchDelete(Long tenantId, List<Long> idList, Long operatorId);
 
-    ResponseData<List<CouponVo>> listCoupon(Long tenantId);
+    ResponseData<List<CouponVo>> listCoupon(CouponQueryReqDto reqDto);
 
-    ResponseData<PageRespVo<CouponVo>> queryPage(PageReqVo<CouponVo> pageReqVo);
+    ResponseData<PageRespVo<CouponVo>> queryPage(PageReqVo<CouponQueryReqDto> pageReqVo);
 }

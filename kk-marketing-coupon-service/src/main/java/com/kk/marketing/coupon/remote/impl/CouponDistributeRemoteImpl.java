@@ -10,6 +10,7 @@ import com.kk.marketing.coupon.entity.CouponUser;
 import com.kk.marketing.coupon.enums.ActiveStatusEnum;
 import com.kk.marketing.coupon.enums.CouponUserStatusEnum;
 import com.kk.marketing.coupon.enums.UsableTimeTypeEnum;
+import com.kk.marketing.coupon.remote.CouponDataRemote;
 import com.kk.marketing.coupon.remote.CouponDistributionRemote;
 import com.kk.marketing.coupon.req.CouponDistributeDetailReqDto;
 import com.kk.marketing.coupon.req.CouponDistributionReqDto;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.kk.marketing.coupon.req.CouponDistributionReqDto.MODE_TOLERANT;
 
@@ -38,6 +40,9 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
 
     @Autowired
     private CouponDataService couponDataService;
+
+    @Autowired
+    private CouponDataRemote couponDataRemote;
 
     @Autowired
     private CouponUserService couponUserService;
@@ -56,16 +61,17 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
             return;
         }
 
+        final List<Long> couponIdList = reqDto.getCouponList().stream().map(CouponDistributeDetailReqDto::getCouponId).distinct().toList();
+        final Map<Long, Integer> couponStockMap = couponDataRemote.getCouponStockMap(reqDto.getTenantId(), couponIdList);
         for (CouponDistributeDetailReqDto distributeCouponReqDto : reqDto.getCouponList()) {
-            final int couponStock = couponDataService.getCouponStock(reqDto.getTenantId(), distributeCouponReqDto.getCouponId());
             final int shouldDistributeCouponNum = distributeCouponReqDto.getNum() * reqDto.getUserIdList().size();
-            AssertUtils.isTrue(couponStock >= shouldDistributeCouponNum, "券[" + distributeCouponReqDto.getCouponId() + "]库存不足，发券失败");
+            AssertUtils.isTrue(Optional.ofNullable(couponStockMap.get(distributeCouponReqDto.getCouponId())).orElse(0) >= shouldDistributeCouponNum, "券[" + distributeCouponReqDto.getCouponId() + "]库存不足，发券失败");
         }
     }
 
     protected void deductStock(CouponDistributionReqDto reqDto) {
         for (CouponDistributeDetailReqDto distributeCouponReqDto : reqDto.getCouponList()) {
-            final boolean deductResult = couponDataService.deductStock(reqDto.getTenantId(), distributeCouponReqDto.getCouponId(), distributeCouponReqDto.getNum());
+            final boolean deductResult = couponDataService.increaseNumberDistributed(reqDto.getTenantId(), distributeCouponReqDto.getCouponId(), distributeCouponReqDto.getNum());
             AssertUtils.isTrue(deductResult, "券[" + distributeCouponReqDto.getCouponId() + "]库存扣减出错，发券失败");
         }
     }
