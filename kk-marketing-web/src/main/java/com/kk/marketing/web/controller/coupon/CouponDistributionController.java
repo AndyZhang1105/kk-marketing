@@ -10,6 +10,7 @@ import com.kk.marketing.coupon.req.CouponDistributionReqDto;
 import com.kk.marketing.coupon.resp.DistributeCouponUserRespDto;
 import com.kk.marketing.web.controller.BaseController;
 import com.kk.marketing.web.req.DistributeCouponReqVo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ import static com.kk.marketing.coupon.req.CouponDistributionReqDto.MODE_STRICT;
  */
 @RequestMapping("/marketing/web/coupon")
 @RestController
+@Tag(name = "发券", description = "发券模的相关接口")
 public class CouponDistributionController extends BaseController {
 
     @DubboReference(lazy = true, timeout = 10000)

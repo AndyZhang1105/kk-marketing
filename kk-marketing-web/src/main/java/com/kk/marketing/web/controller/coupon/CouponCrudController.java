@@ -14,6 +14,7 @@ import com.kk.marketing.web.controller.BaseController;
 import com.kk.marketing.web.req.ActiveStatusUpdateReqVo;
 import com.kk.marketing.web.req.CouponAddReqVo;
 import com.kk.marketing.web.req.CouponQueryReqVo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +31,7 @@ import java.util.Objects;
  */
 @RequestMapping("/marketing/web/coupon")
 @RestController
+@Tag(name = "券模板表", description = "券模板的增删改查接口")
 public class CouponCrudController extends BaseController {
 
     @DubboReference(lazy = true)
