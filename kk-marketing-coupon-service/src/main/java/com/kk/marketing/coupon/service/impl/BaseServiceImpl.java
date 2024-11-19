@@ -1,4 +1,4 @@
-package com.kk.marketing.coupon.service;
+package com.kk.marketing.coupon.service.impl;
 
 import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -12,6 +12,7 @@ import com.kk.arch.common.util.JsonUtils;
 import com.kk.arch.common.util.StringUtils;
 import com.kk.arch.common.vo.PageReqVo;
 import com.kk.arch.common.vo.PageRespVo;
+import com.kk.marketing.coupon.service.BaseService;
 
 import java.util.Collections;
 import java.util.List;

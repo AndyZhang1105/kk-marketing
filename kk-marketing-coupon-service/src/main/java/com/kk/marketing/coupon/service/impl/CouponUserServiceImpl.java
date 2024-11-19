@@ -1,4 +1,4 @@
-package com.kk.marketing.coupon.service;
+package com.kk.marketing.coupon.service.impl;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,6 +8,7 @@ import com.kk.arch.common.vo.PageReqVo;
 import com.kk.arch.common.vo.PageRespVo;
 import com.kk.marketing.coupon.entity.CouponUser;
 import com.kk.marketing.coupon.mapper.CouponUserMapper;
+import com.kk.marketing.coupon.service.CouponUserService;
 import com.kk.marketing.coupon.vo.CouponUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

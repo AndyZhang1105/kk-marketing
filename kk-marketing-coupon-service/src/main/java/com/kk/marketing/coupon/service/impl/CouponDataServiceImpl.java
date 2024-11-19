@@ -1,9 +1,10 @@
-package com.kk.marketing.coupon.service;
+package com.kk.marketing.coupon.service.impl;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.kk.marketing.coupon.entity.CouponData;
 import com.kk.marketing.coupon.mapper.CouponDataMapper;
+import com.kk.marketing.coupon.service.CouponDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
