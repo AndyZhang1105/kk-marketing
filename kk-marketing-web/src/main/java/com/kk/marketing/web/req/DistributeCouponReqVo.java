@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class DistributeCouponReqVo implements Serializable {
 
-    @NotEmpty(message = "同一批次发券不能超过1000个会员")
+    @NotEmpty(message = "发券用户不能为空")
     @Size(min = 1, max = 1000, message = "同一批次发券不能超过1000个会员")
     private List<Long> userIdList;
 

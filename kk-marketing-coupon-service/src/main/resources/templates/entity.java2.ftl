@@ -1,6 +1,12 @@
 package ${package.Entity};
 
 <#list table.importPackages as pkg>
+<#if pkg == "java.time.LocalDateTime">
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+<#else>
+import ${pkg};
+</#if>
 import ${pkg};
 </#list>
 <#if springdoc>
@@ -98,7 +104,17 @@ public class ${entity} {
     <#if field.logicDeleteField>
     @TableLogic
     </#if>
-    private ${field.propertyType} ${field.propertyName};
+    <#-- 自定义类型转换 -->
+    <#assign fieldType = field.propertyType>
+    <#if field.columnType == "TINYINT" && field.length == 1>
+        <#assign fieldType = "Integer">
+    <#elseif field.columnType == "BYTE">
+        <#assign fieldType = "Integer">
+    <#elseif field.columnType == "LOCAL_DATE_TIME">
+        <#assign fieldType = "Date">
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    </#if>
+    private ${fieldType} ${field.propertyName};
 </#list>
 <#------------  END 字段循环遍历  ---------->
 <#if !entityLombokModel>

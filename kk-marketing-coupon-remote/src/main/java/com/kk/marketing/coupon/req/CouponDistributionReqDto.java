@@ -31,7 +31,7 @@ public class CouponDistributionReqDto implements Serializable {
     /**
      * 发放的会员用户id列表
      */
-    @NotEmpty(message = "发放的会员用户id列表不能为空")
+    @NotEmpty(message = "发券的用户id列表不能为空")
     @Size(min = 1, max = 1000, message = "同一批次发券不能超过1000个会员")
     private List<Long> userIdList;
 

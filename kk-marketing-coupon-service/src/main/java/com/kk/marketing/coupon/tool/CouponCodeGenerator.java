@@ -23,12 +23,16 @@ public class CouponCodeGenerator {
 
         List<String> tables = List.of("t_coupon_verifier");//需要生成对应代码的表名的集合
 
-        FastAutoGenerator.create(url, username, password).globalConfig(builder -> {
+        FastAutoGenerator.create(url, username, password)
+
+                         .globalConfig(builder -> {
                              builder.author("Zal") // 设置作者
                                     .disableOpenDir().enableSpringdoc().enableSwagger() // 开启 swagger 模式
                                     .outputDir(System.getProperty("user.dir") + "\\kk-marketing-coupon-service\\src\\main\\java") // 指定输出目录
                                     .commentDate("yyyy-MM-dd");//日期格式
-                         }).dataSourceConfig(builder -> builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
+                         })
+
+                         .dataSourceConfig(builder -> builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
                              int typeCode = metaInfo.getJdbcType().TYPE_CODE;
                              if (typeCode == Types.SMALLINT) {
                                  // 自定义类型转换
@@ -52,12 +56,12 @@ public class CouponCodeGenerator {
                                                             .enableLombok()// 自动添加lombok注解@Getter @Setter
                                                             .logicDeleteColumnName("deleted")// 指定逻辑删除字段名自动为其添加逻辑删除字段注解
                                                             //.enableTableFieldAnnotation()//启用表字段注解@TableField
-                                                            .enableRemoveIsPrefix().disableSerialVersionUID()//
+                                                            //.enableRemoveIsPrefix()
+                                                            .disableSerialVersionUID()//
                                                             .addIgnoreColumns("tenant_id", "update_time", "create_time", "update_by", "create_by", "deleted") //
                                                             .convertFileName(o -> o.substring(1))//
                                                             .superClass(BaseEntity.class)
-                                                            .javaTemplate("templates/entity.java.ftl")
-                                                            .disable()
+                                                            .javaTemplate("/templates/entity.java2") // make sure this file is generated within target directory
 
                                                             //Mapper策略配置
                                                             .mapperBuilder()
@@ -83,7 +87,6 @@ public class CouponCodeGenerator {
 
                                                             //Controller策略配置
                                                             .controllerBuilder().disable()
-
 
                          ).templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                          .execute();

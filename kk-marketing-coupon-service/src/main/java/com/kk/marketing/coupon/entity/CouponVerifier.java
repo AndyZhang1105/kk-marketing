@@ -41,5 +41,5 @@ public class CouponVerifier extends BaseEntity {
     private Integer verifierQuantity;
 
     @Schema(description = "状态，1正常，0停用")
-    private Byte status;
+    private Integer status;
 }
