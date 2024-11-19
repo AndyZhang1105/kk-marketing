@@ -19,6 +19,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
     <#if chainModel>
 import lombok.experimental.Accessors;
     </#if>
@@ -38,6 +40,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
     </#if>
 </#if>
+@AllArgsConstructor
+@NoArgsConstructor
 <#if table.convert>
 @TableName("${schemaName}${table.name}")
 </#if>

@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -17,6 +19,8 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("t_activity_goods")
 @Schema(name = "ActivityGoods", description = "活动相关的商品信息")
 public class ActivityGoods extends BaseEntity {

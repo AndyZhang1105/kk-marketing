@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
@@ -20,6 +22,8 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("t_coupon")
 @Schema(name = "Coupon", description = "券模板信息表")
 public class Coupon extends BaseEntity {

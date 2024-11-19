@@ -1,8 +1,8 @@
 package com.kk.marketing.web.req;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
 /**
  * @author Zal
@@ -11,10 +11,11 @@ import lombok.Data;
 public class DistributeCouponDetailReqVo {
 
     @NotNull(message = "发放的券id不能为空")
+    @Range(min = 1, max = Integer.MAX_VALUE)
     private Long couponId;
 
-    @NotNull(message = "发放的券数量不能为空")
-    @Size(min = 1, max = 100, message = "同一批次发券的单种券不能超过100张")
+    @NotNull(message = "单种券发放数量不能为空")
+    @Range(min = 1, max = 100, message = "单种券发放数量必须是1-100")
     private Integer num;
 
 }

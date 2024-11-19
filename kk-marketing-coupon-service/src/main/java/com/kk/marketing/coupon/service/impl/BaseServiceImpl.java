@@ -125,7 +125,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
 
     @Override
     public List<T> queryList(Long tenantId, List<Long> idList) {
-        return new QueryChainWrapper<>(this.baseMapper)
+        return new QueryChainWrapper<>(this.getBaseMapper())
                 .eq(FIELD_TENANT_ID, tenantId)
                 .in(FIELD_ID, idList)
                 .list();
