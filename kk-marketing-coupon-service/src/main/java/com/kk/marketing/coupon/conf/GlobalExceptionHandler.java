@@ -52,4 +52,12 @@ public class GlobalExceptionHandler {
         return errors;
     }
 
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public Map<String, String> handleException(Exception ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", ex.getMessage());
+        return errors;
+    }
+
 }
