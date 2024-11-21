@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseData<Object>> handleGenericException(Exception e) {
-        ResponseData<Object> errorResponse = ResponseData.builder().code(ERROR_CODE).msg(e.getMessage()).build();
+        ResponseData<Object> errorResponse = ResponseData.builder().code(ERROR_CODE).msg("系统繁忙").build();
         return new ResponseEntity<>(errorResponse, HttpStatus.OK);
     }
 

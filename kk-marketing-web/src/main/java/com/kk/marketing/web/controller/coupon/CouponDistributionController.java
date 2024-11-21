@@ -12,6 +12,7 @@ import com.kk.marketing.web.controller.BaseController;
 import com.kk.marketing.web.req.DistributeCouponReqVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,6 +50,7 @@ public class CouponDistributionController extends BaseController {
                 .sourceStoreName(getStoreName(reqVo.getSourceStoreId()))
                 .operatorId(0L)
                 .build();
+        RpcContext.getContext().setAttachment("tenantId", getTenantId());
         ResponseData<List<DistributeCouponUserRespDto>> responseData = couponDistributionRemote.syncDistributeCoupon(reqDto);
         return responseData.getCode() == ResponseData.SUCCESS ? ResponseUtils.success(true) : ResponseUtils.fail(responseData.getMsg());
     }

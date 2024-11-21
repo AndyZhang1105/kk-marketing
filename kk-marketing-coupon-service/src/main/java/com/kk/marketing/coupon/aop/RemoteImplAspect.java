@@ -3,13 +3,16 @@ package com.kk.marketing.coupon.aop;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.shaded.com.google.common.collect.Sets;
 import com.kk.arch.common.exception.BusinessException;
+import com.kk.arch.common.util.AssertUtils;
 import com.kk.arch.common.util.JsonUtils;
 import com.kk.arch.common.util.ResponseUtils;
+import com.kk.marketing.coupon.conf.TenantContextHolder;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.rpc.RpcContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,6 +22,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import static com.kk.marketing.coupon.filter.TenantFilter.TENANT_ID;
 
 /**
  * @author Zal
@@ -37,6 +42,11 @@ public class RemoteImplAspect {
 
     @Around("execution(* com.kk.marketing.coupon.remote.impl.*RemoteImpl.*(..))")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        // 0. check the tenantId is existed or not
+        final Long tenantId = Long.valueOf(RpcContext.getContext().getAttachment(TENANT_ID));
+        AssertUtils.isNotNull(tenantId, "租户id不能为空");
+        TenantContextHolder.setTenantId(tenantId);
+
         // 1. manual to do validation
         Set<ConstraintViolation<Object>> violations = Sets.newHashSet();
         Arrays.stream(joinPoint.getArgs()).forEach(o -> {

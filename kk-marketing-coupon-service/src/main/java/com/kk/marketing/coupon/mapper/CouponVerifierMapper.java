@@ -2,6 +2,9 @@ package com.kk.marketing.coupon.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.kk.marketing.coupon.entity.CouponVerifier;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,7 @@ import com.kk.marketing.coupon.entity.CouponVerifier;
  * @since 2024-11-19
  */
 public interface CouponVerifierMapper extends BaseMapper<CouponVerifier> {
+
+    List<CouponVerifier> queryList(@Param("name") String name);
 
 }
