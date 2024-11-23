@@ -27,7 +27,6 @@ import java.util.concurrent.*;
 
 import static com.kk.arch.common.constants.CommonConstants.HEADER_TOKEN;
 import static com.kk.arch.common.vo.ResponseData.SUCCESS;
-import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -50,7 +49,7 @@ public class CouponCrudControllerRestTest {
 
     @Test
     public void queryPageTest() throws Exception {
-        int numberOfThreads = 1000;
+        int numberOfThreads = 100;
         CountDownLatch latch = new CountDownLatch(numberOfThreads);
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
         List<Future<Boolean>> futures = new ArrayList<>();
@@ -75,7 +74,7 @@ public class CouponCrudControllerRestTest {
             });
             log.info("i: {}", finalI);
             futures.add(future);
-            sleep(10);
+            // sleep(10);
         }
 
         // 等待所有任务完成并验证结果

@@ -21,20 +21,15 @@ import static org.apache.dubbo.common.constants.CommonConstants.PROVIDER;
 public class TenantFilter implements Filter {
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        if(!"com.kk.gateway.auth.remote.UserTokenService".equals(invocation.getTargetServiceUniqueName())) {
-            RpcContext.getContext().setAttachment(TENANT_ID, UserContextHolder.getTenantId());
-        }
+        RpcContext.getContext().setAttachment(TENANT_ID, UserContextHolder.getTenantId());
 
         String methodName = invocation.getMethodName();
         Object[] arguments = invocation.getArguments();
-        log.info("Dubbo Calling method: {}, args: {}, tenantId: {}", methodName, Arrays.toString(arguments), UserContextHolder.getTenantIdIfPresent());
+        log.info("Dubbo Calling method: {}, args: {}, tenantId: {}", methodName, Arrays.toString(arguments), UserContextHolder.getTenantId());
 
         Result result = invoker.invoke(invocation);
 
-        log.info("Dubbo Response result: {}, tenantId: {}", result.getValue(), UserContextHolder.getTenantIdIfPresent());
-
-        // avoid to memory leak when the thread multiplexing
-        UserContextHolder.clear();
+        log.info("Dubbo Response result: {}, tenantId: {}", result.getValue(), UserContextHolder.getTenantId());
 
         return result;
     }
