@@ -43,22 +43,20 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
     }
 
     @Override
-    public Boolean activate(Long tenantId, Long id) {
-        final T one = this.queryOne(tenantId, id);
+    public Boolean activate(Long id) {
+        final T one = this.queryOne(id);
         AssertUtils.isNotNull(one, "要启用的目标不存在");
         return new UpdateChainWrapper<T>(this.baseMapper)
-                .eq(FIELD_TENANT_ID, tenantId)
                 .eq(FIELD_ID, id)
                 .set(FIELD_ACTIVE_STATUS, YES)
                 .update();
     }
 
     @Override
-    public Boolean deactivate(Long tenantId, Long id) {
-        final T one = this.queryOne(tenantId, id);
+    public Boolean deactivate(Long id) {
+        final T one = this.queryOne(id);
         AssertUtils.isNotNull(one, "要禁用的目标不存在");
         return new UpdateChainWrapper<T>(this.baseMapper)
-                .eq(FIELD_TENANT_ID, tenantId)
                 .eq(FIELD_ID, id)
                 .set(FIELD_ACTIVE_STATUS, NO)
                 .update();
@@ -68,7 +66,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
     public boolean updateOrSave(T param) {
         final Map<String, Object> fieldMap = JsonUtils.toMap(param);
         return new UpdateChainWrapper<>(this.baseMapper)
-                .eq(FIELD_TENANT_ID, fieldMap.get(StringUtils.toCamelCase(FIELD_TENANT_ID)))
                 .eq(FIELD_ID, fieldMap.get(StringUtils.toCamelCase(FIELD_ID)))
                 .update() || this.save(param);
     }
@@ -84,9 +81,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
     }
 
     @Override
-    public boolean delete(Long tenantId, Long id, Long operatorId) {
+    public boolean delete(Long id, Long operatorId) {
         return new UpdateChainWrapper<T>(this.baseMapper)
-                .eq(FIELD_TENANT_ID, tenantId)
                 .eq(FIELD_ID, id)
                 .set(FIELD_DELETED, YES)
                 .set(FIELD_UPDATE_BY, operatorId)
@@ -94,9 +90,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
     }
 
     @Override
-    public boolean delete(Long tenantId, List<Long> idList, Long operatorId) {
+    public boolean delete(List<Long> idList, Long operatorId) {
         return new UpdateChainWrapper<T>(this.baseMapper)
-                .eq(FIELD_TENANT_ID, tenantId)
                 .in(FIELD_ID, idList)
                 .set(FIELD_DELETED, YES)
                 .set(FIELD_UPDATE_BY, operatorId)
@@ -104,9 +99,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
     }
 
     @Override
-    public T queryOne(Long tenantId, Long id) {
+    public T queryOne(Long id) {
         final Map<String, Object> whereMap = Maps.newHashMap();
-        whereMap.put(FIELD_TENANT_ID, tenantId);
         whereMap.put(FIELD_ID, id);
         final List<T> resultList = this.baseMapper.selectByMap(whereMap);
         return Optional.ofNullable(resultList).orElse(Collections.emptyList()).stream().findFirst().orElse(null);
@@ -124,16 +118,15 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
     }
 
     @Override
-    public List<T> queryList(Long tenantId, List<Long> idList) {
+    public List<T> queryList(List<Long> idList) {
         return new QueryChainWrapper<>(this.getBaseMapper())
-                .eq(FIELD_TENANT_ID, tenantId)
                 .in(FIELD_ID, idList)
                 .list();
     }
 
     @Override
-    public Map<Long, T> queryMap(Long tenantId, List<Long> idList, Function<T, Long> keyMapper) {
-        return queryList(tenantId, idList).stream().collect(Collectors.toMap(keyMapper, Function.identity(), (f, s) -> f));
+    public Map<Long, T> queryMap(List<Long> idList, Function<T, Long> keyMapper) {
+        return queryList(idList).stream().collect(Collectors.toMap(keyMapper, Function.identity(), (f, s) -> f));
     }
 
     @Override

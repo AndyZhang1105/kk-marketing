@@ -8,7 +8,7 @@
         select *
         from t_coupon
         <where>
-            tenant_id = #{params.tenantId} and deleted = 0
+            deleted = 0
             <if test="params.id != null and params.id != ''">
                 AND id = #{params.id}
             </if>

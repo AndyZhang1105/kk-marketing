@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 @SpringBootTest()
 @ActiveProfiles("dev")
-public class DruidDataSourceTests {
+public class DruidDataSourceTest {
 
     @Autowired
     private DataSource dataSource;

@@ -84,6 +84,7 @@
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                     <include>**/templates/*.ftl</include>
+                    <include>**/META-INF/*/*</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

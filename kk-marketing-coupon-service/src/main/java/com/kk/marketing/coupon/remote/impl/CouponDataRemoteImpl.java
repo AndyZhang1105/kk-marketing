@@ -28,8 +28,8 @@ public class CouponDataRemoteImpl implements CouponDataRemote {
 
     @Override
     public Map<Long, Integer> getCouponStockMap(Long tenantId, List<Long> couponIdList) {
-        final Map<Long, CouponData> couponDataMap = couponDataService.getCouponDataMap(tenantId, couponIdList);
-        final Map<Long, Coupon> couponMap = couponService.queryMap(tenantId, couponIdList);
+        final Map<Long, CouponData> couponDataMap = couponDataService.getCouponDataMap(couponIdList);
+        final Map<Long, Coupon> couponMap = couponService.queryMap(couponIdList);
 
         Map<Long, Integer> resultMap = Maps.newHashMap();
         Optional.ofNullable(couponIdList).orElse(Collections.emptyList()).forEach(o -> {

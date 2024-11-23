@@ -67,18 +67,18 @@ public class CouponCrudRemoteImpl implements CouponCrudRemote {
 
     @Override
     public ResponseData<Boolean> activate(ActiveStatusUpdateReqDto reqDto) {
-        return ResponseUtils.success(couponService.activate(reqDto.getTenantId(), reqDto.getId()));
+        return ResponseUtils.success(couponService.activate(reqDto.getId()));
     }
 
     @Override
     public ResponseData<Boolean> deactivate(ActiveStatusUpdateReqDto reqDto) {
-        return ResponseUtils.success(couponService.deactivate(reqDto.getTenantId(), reqDto.getId()));
+        return ResponseUtils.success(couponService.deactivate(reqDto.getId()));
     }
 
     @Override
     @Transactional
     public ResponseData<Boolean> batchDelete(Long tenantId, List<Long> idList, Long operatorId) {
-        final boolean result = couponService.delete(tenantId, idList, operatorId);
+        final boolean result = couponService.delete(idList, operatorId);
         Assert.isTrue(result, "批量删除目标失败");
         return ResponseUtils.success(true);
     }

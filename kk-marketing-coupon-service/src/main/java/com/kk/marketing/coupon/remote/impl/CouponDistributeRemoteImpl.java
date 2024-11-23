@@ -49,7 +49,7 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
 
     protected void checkCoupon(CouponDistributionReqDto reqDto) {
         final List<Long> couponIdList = reqDto.getCouponList().stream().map(CouponDistributeDetailReqDto::getCouponId).distinct().toList();
-        final Map<Long, Coupon> couponMap = couponService.queryMap(reqDto.getTenantId(), couponIdList);
+        final Map<Long, Coupon> couponMap = couponService.queryMap(couponIdList);
         AssertUtils.isTrue(reqDto.getCouponList().size() == couponMap.size(), "有券未找到，发券失败");
 
         final List<Long> statusNotOpenIdList = couponMap.keySet().stream().filter(o -> ActiveStatusEnum.CLOSE.getCode() == couponMap.get(o).getActiveStatus()).toList();
@@ -71,7 +71,7 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
 
     protected void deductStock(CouponDistributionReqDto reqDto) {
         for (CouponDistributeDetailReqDto distributeCouponReqDto : reqDto.getCouponList()) {
-            final boolean deductResult = couponDataService.increaseNumberDistributed(reqDto.getTenantId(), distributeCouponReqDto.getCouponId(), distributeCouponReqDto.getNum());
+            final boolean deductResult = couponDataService.increaseNumberDistributed(distributeCouponReqDto.getCouponId(), distributeCouponReqDto.getNum());
             AssertUtils.isTrue(deductResult, "券[" + distributeCouponReqDto.getCouponId() + "]库存扣减出错，发券失败");
         }
     }
@@ -97,7 +97,7 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
      */
     protected List<CouponUser> saveCouponUser(CouponDistributionReqDto reqDto) {
         final List<Long> couponIdList = reqDto.getCouponList().stream().map(CouponDistributeDetailReqDto::getCouponId).distinct().toList();
-        final Map<Long, Coupon> couponMap = couponService.queryMap(reqDto.getTenantId(), couponIdList);
+        final Map<Long, Coupon> couponMap = couponService.queryMap(couponIdList);
 
         List<CouponUser> couponUserList = Lists.newArrayList();
         reqDto.getUserIdList().forEach(userId -> {

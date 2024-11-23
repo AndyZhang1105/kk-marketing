@@ -15,27 +15,27 @@ public interface BaseService<T> extends IService<T> {
 
     Boolean addOne(Object param);
 
-    Boolean activate(Long tenantId, Long id);
+    Boolean activate(Long id);
 
-    Boolean deactivate(Long tenantId, Long id);
+    Boolean deactivate(Long id);
 
     boolean updateOrSave(T param);
 
     boolean increaseOrSave(T param, String fieldName, int num);
 
-    boolean delete(Long tenantId, Long id, Long operatorId);
+    boolean delete(Long id, Long operatorId);
 
-    boolean delete(Long tenantId, List<Long> idList, Long operatorId);
+    boolean delete(List<Long> idList, Long operatorId);
 
-    T queryOne(Long tenantId, Long id);
+    T queryOne(Long id);
 
     T queryOne(T object);
 
     List<T> queryList(T object);
 
-    List<T> queryList(Long tenantId, List<Long> idList);
+    List<T> queryList(List<Long> idList);
 
-    Map<Long, T> queryMap(Long tenantId, List<Long> idList, Function<T, Long> keyMapper);
+    Map<Long, T> queryMap(List<Long> idList, Function<T, Long> keyMapper);
 
     PageRespVo<T> queryPageByEntity(PageReqVo<T> pageReqVo);
 }

@@ -24,39 +24,35 @@ public class CouponDataServiceImpl extends BaseServiceImpl<CouponDataMapper, Cou
     private CouponDataMapper couponDataMapper;
 
     @Override
-    public Map<Long, CouponData> getCouponDataMap(Long tenantId, List<Long> couponIdList) {
+    public Map<Long, CouponData> getCouponDataMap(List<Long> couponIdList) {
         List<CouponData> resultList = new LambdaQueryChainWrapper<>(this.baseMapper)
-                .eq(CouponData::getTenantId, tenantId)
                 .in(CouponData::getCouponId, couponIdList)
                 .list();
         return resultList.stream().collect(Collectors.toMap(CouponData::getCouponId, Function.identity(), (f, s) -> f));
     }
 
     @Override
-    public int getNumberDistributed(Long tenantId, Long couponId) {
+    public int getNumberDistributed(Long couponId) {
         final Optional<CouponData> couponDataOptional = new LambdaQueryChainWrapper<>(couponDataMapper)
-                .eq(CouponData::getTenantId, tenantId)
                 .in(CouponData::getCouponId, couponId)
                 .oneOpt();
         return couponDataOptional.map(CouponData::getNumberDistributed).orElse(0);
     }
 
     @Override
-    public boolean increaseNumberDistributed(Long tenantId, Long couponId, Integer num) {
+    public boolean increaseNumberDistributed(Long couponId, Integer num) {
         return new LambdaUpdateChainWrapper<>(couponDataMapper)
-                .eq(CouponData::getTenantId, tenantId)
                 .eq(CouponData::getCouponId, couponId)
                 .setIncrBy(CouponData::getNumberDistributed, num)
-                .update() || this.save(CouponData.builder().tenantId(tenantId).couponId(couponId).numberDistributed(num).build());
+                .update() || this.save(CouponData.builder().couponId(couponId).numberDistributed(num).build());
     }
 
     @Override
-    public boolean increaseNumberConsumed(Long tenantId, Long couponId, Integer num) {
+    public boolean increaseNumberConsumed(Long couponId, Integer num) {
         return new LambdaUpdateChainWrapper<>(couponDataMapper)
-                .eq(CouponData::getTenantId, tenantId)
                 .eq(CouponData::getCouponId, couponId)
                 .setIncrBy(CouponData::getNumberConsumed, num)
-                .update() || this.save(CouponData.builder().tenantId(tenantId).couponId(couponId).numberConsumed(num).build());
+                .update() || this.save(CouponData.builder().couponId(couponId).numberConsumed(num).build());
     }
 
 }

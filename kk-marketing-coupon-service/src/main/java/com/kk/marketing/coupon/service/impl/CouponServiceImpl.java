@@ -24,9 +24,9 @@ public class CouponServiceImpl extends BaseServiceImpl<CouponMapper, Coupon> imp
     private CouponMapper couponMapper;
 
     @Override
-    public Map<Long, Coupon> queryMap(Long tenantId, List<Long> idList) {
+    public Map<Long, Coupon> queryMap(List<Long> idList) {
         // return this.queryList(tenantId, idList).stream().collect(Collectors.toMap(Coupon::getId, Function.identity(), (f, s) -> f));
-        return this.queryMap(tenantId, idList, Coupon::getId);
+        return this.queryMap(idList, Coupon::getId);
     }
 
     @Override

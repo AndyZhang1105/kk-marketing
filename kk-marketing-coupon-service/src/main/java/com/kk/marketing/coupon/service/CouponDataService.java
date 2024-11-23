@@ -14,21 +14,21 @@ public interface CouponDataService extends IService<CouponData> {
     /**
      * get the num distributed of coupon
      */
-    Map<Long, CouponData> getCouponDataMap(Long tenantId, List<Long> couponIdList);
+    Map<Long, CouponData> getCouponDataMap(List<Long> couponIdList);
 
     /**
      * get the num distributed of coupon
      */
-    int getNumberDistributed(Long tenantId, Long couponId);
+    int getNumberDistributed(Long couponId);
 
     /**
      * increase number distributed of coupon
      */
-    boolean increaseNumberDistributed(Long tenantId, Long couponId, Integer num);
+    boolean increaseNumberDistributed(Long couponId, Integer num);
 
     /**
      * increase number consumed of coupon
      */
-    boolean increaseNumberConsumed(Long tenantId, Long couponId, Integer num);
+    boolean increaseNumberConsumed(Long couponId, Integer num);
 
 }

@@ -14,7 +14,7 @@ import java.util.Map;
 public interface CouponService extends BaseService<Coupon> {
 
 
-    Map<Long, Coupon> queryMap(Long tenantId, List<Long> idList);
+    Map<Long, Coupon> queryMap(List<Long> idList);
 
     List<Coupon> queryList(CouponQueryReqDto reqDto);
 

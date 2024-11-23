@@ -4,6 +4,7 @@ import com.kk.arch.common.util.CollectionUtils;
 import com.kk.marketing.coupon.conf.TenantContextHolder;
 import com.kk.marketing.coupon.entity.CouponVerifier;
 import com.kk.marketing.coupon.mapper.CouponVerifierMapper;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -28,11 +29,16 @@ public class TenantTest {
     @Autowired
     private CouponVerifierMapper mapper;
 
-    private static final Long TEST_TENANT_ID = 9901L;
+    private static final Long TEST_TENANT_ID = 9999L;
 
     @BeforeAll
     public static void beforeAll() {
         TenantContextHolder.setTenantId(TEST_TENANT_ID);
+    }
+
+    @AfterAll
+    public static void AfterAll() {
+        TenantContextHolder.clear();
     }
 
     @Test
