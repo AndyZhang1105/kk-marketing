@@ -1,6 +1,8 @@
 package com.kk.marketing.web.req;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,6 +11,7 @@ import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Zal
@@ -23,6 +26,7 @@ public class CouponAddReqVo implements Serializable {
 
     @NotBlank(message = "券名称不能为空")
     @Size(min = 1, max = 30, message = "券名称不能超过30个字符")
+    @Schema(description = "券名称")
     private String couponName;
 
     @NotNull(message = "券使用类型不能为空")
@@ -122,14 +126,20 @@ public class CouponAddReqVo implements Serializable {
      * 券叠加类型:0-不叠加,1-不能叠加部分优惠券,2-可与所有优惠券叠加
      */
     @NotNull(message = "券叠加类型不能为空")
+    @Schema(description = "券叠加类型")
     private Integer consumeStackingUseType;
 
     /**
      * 当订单全额退款时，已核销券是否置为未使用，0不，1是
      */
     @NotNull(message = "当订单全额退款时，已核销券是否置为未使用，不能为空")
+    @Schema(description = "当订单全额退款时，已核销券是否置为未使用")
     private Integer recycleAfterRefund;
 
+    @Schema(description = "简单描述")
     private String shortDesc;
+
+    @ArraySchema(arraySchema = @Schema(description = "适用或不适用的商品列表"))
+    private List<ActivityGoodsAddReqVo> goodsList;
 
 }

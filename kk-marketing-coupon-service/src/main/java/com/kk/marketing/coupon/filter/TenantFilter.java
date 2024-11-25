@@ -13,7 +13,7 @@ import static org.apache.dubbo.common.constants.CommonConstants.PROVIDER;
 /**
  * @author Zal
  * It should add META-INF.dubbo folder and create a file named after org.apache.dubbo.rpc.Filter, which define this fitler winthin it.
- * then add dubbo.provider.filter=tenantFilter to application.properties.
+ * then add dubbo.provider.filter=tenantFilter to application_disabled.properties.
  */
 @Activate(group = {PROVIDER, CONSUMER})
 @Slf4j

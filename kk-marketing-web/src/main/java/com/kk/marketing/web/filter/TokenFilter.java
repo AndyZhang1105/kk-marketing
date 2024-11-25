@@ -28,7 +28,8 @@ public class TokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 跳过生成文档的路径
-        if (request.getServletPath().startsWith("/doc.html") || request.getServletPath().startsWith("/v3/api-docs/")) {
+        String path = request.getServletPath();
+        if (path.startsWith("/doc.html") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui/") || path.startsWith("/webjars/")) {
             filterChain.doFilter(request, response);
             return;
         }

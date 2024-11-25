@@ -1,6 +1,7 @@
 package com.kk.marketing.coupon.req;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,6 +11,7 @@ import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Zal
@@ -135,5 +137,8 @@ public class CouponAddReqDto extends BaseReqDto implements Serializable {
 
     @NotNull(message = "创建人不能为空")
     private Long createBy;
+
+    @ApiModelProperty("适用或不适用的商品列表")
+    private List<ActivityGoodsAddReqDto> goodsList;
 
 }

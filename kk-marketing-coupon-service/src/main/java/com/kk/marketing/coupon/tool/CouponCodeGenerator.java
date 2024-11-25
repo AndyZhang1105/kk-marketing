@@ -21,7 +21,7 @@ public class CouponCodeGenerator {
         String username = "kk";
         String password = "g=utf8&zeroD";
 
-        List<String> tables = List.of("t_coupon_verifier");//需要生成对应代码的表名的集合
+        List<String> tables = List.of("t_activity_goods");//需要生成对应代码的表名的集合
 
         FastAutoGenerator.create(url, username, password)
 
