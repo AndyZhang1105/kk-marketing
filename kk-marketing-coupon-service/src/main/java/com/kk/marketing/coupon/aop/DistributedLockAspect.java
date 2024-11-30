@@ -27,6 +27,7 @@ import static java.lang.Thread.sleep;
 public class DistributedLockAspect {
 
     private static final String REMOVE_IF_VAL = "if (redis.call('GET', KEYS[1]) == ARGV[1]) then return redis.call('DEL', KEYS[1]) else return 0 end";
+
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -45,11 +46,7 @@ public class DistributedLockAspect {
                 return joinPoint.proceed();
             } finally {
                 // 方法执行完成是否需要立即释放锁
-                if (distributedLock.isRelease()) {
-                    // 释放锁, 释放时校验value值是否是当前线程的时间戳, 防止因为锁过期误删除其它线程的锁
-                    RedisScript<Boolean> redisScript = RedisScript.of(REMOVE_IF_VAL, Boolean.class);
-                    this.redisTemplate.execute(redisScript, Collections.singletonList(key), currentTimestamp);
-                }
+                Optional.ofNullable(distributedLock.isRelease() ? "NOT_NULL" : null).ifPresent(o -> this.unlock(key, currentTimestamp));
             }
         } else {
             // 获取锁失败
@@ -93,6 +90,15 @@ public class DistributedLockAspect {
      */
     private boolean tryLock(String key, long currentTimestamp, long expire) {
         return Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(key, currentTimestamp, expire, TimeUnit.MILLISECONDS));
+    }
+
+    /**
+     * 释放锁, 释放时校验value值是否是当前线程的时间戳, 防止因为锁过期误删除其它线程的锁
+     */
+    private void unlock(String key, long currentTimestamp) {
+        // 释放锁, 释放时校验value值是否是当前线程的时间戳, 防止因为锁过期误删除其它线程的锁
+        RedisScript<Boolean> redisScript = RedisScript.of(REMOVE_IF_VAL, Boolean.class);
+        this.redisTemplate.execute(redisScript, Collections.singletonList(key), currentTimestamp);
     }
 
 }
