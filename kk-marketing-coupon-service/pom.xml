@@ -36,6 +36,23 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
+        <!-- add stream for kafka -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-kafka</artifactId>
+        </dependency>
+
+        <!-- ohc -->
+        <dependency>
+            <groupId>org.caffinitas.ohc</groupId>
+            <artifactId>ohc-core</artifactId>
+            <version>0.7.4</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>

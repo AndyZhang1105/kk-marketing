@@ -14,14 +14,14 @@ import java.util.Arrays;
  */
 @Component
 @Aspect
-public class CacheAspect {
+public class RedisCacheAspect {
 
     @Autowired
     private RedisHelper redisHelper;
 
     @Around("@annotation(cache)")
-    public Object cacheMethod(ProceedingJoinPoint joinPoint, Cache cache) throws Throwable {
-        String key = cache.key();
+    public Object cacheMethod(ProceedingJoinPoint joinPoint, RedisCache redisCache) throws Throwable {
+        String key = redisCache.key();
         if (key.isEmpty()) {
             key = generateKey(joinPoint);
         }
@@ -36,7 +36,7 @@ public class CacheAspect {
         result = joinPoint.proceed();
 
         // 将结果存入缓存
-        redisHelper.set(key, result, cache.ttl());
+        redisHelper.set(key, result, redisCache.ttl());
 
         return result;
     }
