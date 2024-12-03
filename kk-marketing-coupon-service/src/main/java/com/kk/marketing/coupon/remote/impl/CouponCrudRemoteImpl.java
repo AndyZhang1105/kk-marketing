@@ -6,6 +6,7 @@ import com.kk.arch.common.util.ResponseUtils;
 import com.kk.arch.common.vo.PageReqVo;
 import com.kk.arch.common.vo.PageRespVo;
 import com.kk.arch.common.vo.ResponseData;
+import com.kk.marketing.coupon.aop.MultiLevelCache;
 import com.kk.marketing.coupon.entity.Coupon;
 import com.kk.marketing.coupon.enums.ActiveStatusEnum;
 import com.kk.marketing.coupon.enums.PeriodTypeEnum;
@@ -84,6 +85,7 @@ public class CouponCrudRemoteImpl implements CouponCrudRemote {
     }
 
     @Override
+    @MultiLevelCache(ttl = 100)
     public ResponseData<List<CouponVo>> listCoupon(CouponQueryReqDto reqDto) {
         final List<CouponVo> couponDtoList = JsonUtils.toList(couponService.queryList(reqDto), CouponVo.class);
         return ResponseUtils.success(couponDtoList);

@@ -8,9 +8,9 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LocalCache {
+public @interface MultiLevelCache {
 
-    String key() default ""; // 缓存键
+    String key() default "";
 
     /**
      * 单位是毫秒, 默认缓存时间60秒

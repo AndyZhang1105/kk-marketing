@@ -8,7 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class TenantContextHolder {
 
-    private static final ThreadLocal<Long> CONTEXT = new ThreadLocal<>();
+    /**
+     * InheritableThreadLocal 子线程也可以访问到这个值
+     */
+    private static final InheritableThreadLocal<Long> CONTEXT = new InheritableThreadLocal<>();
 
     /**
      * 设置租户ID

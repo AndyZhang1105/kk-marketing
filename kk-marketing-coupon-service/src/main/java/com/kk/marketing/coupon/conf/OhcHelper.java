@@ -20,7 +20,7 @@ public class OhcHelper {
                                                                           //单位是字节，默认64M空间
                                                                           .capacity(64 * 1024 * 1024L)
                                                                           .timeouts(true)
-                                                                          .defaultTTLmillis(600 * 1000)
+                                                                          .defaultTTLmillis(60 * 1000)
                                                                           .eviction(Eviction.LRU)
                                                                           .build();
 
@@ -32,19 +32,20 @@ public class OhcHelper {
      * @return b
      */
     public boolean put(String k, Object v) {
-        return put(k, v, 9223372036854775807L);
+        return put(k, v, 60 * 1000L);
     }
 
     /**
      * 设置缓存值
-     * @param k 键
-     * @param v 值
-     * @param time 过期时间，单位是秒, -1表示永不过期
+     *
+     * @param k    键
+     * @param v    值
+     * @param time 过期时间，单位是毫秒, -1表示永不过期
      * @return boolean
      */
     public boolean put(String k, Object v, Long time) {
         try {
-            return OH_CACHE.put(k, v, time / 1000);
+            return OH_CACHE.put(k, v,  System.currentTimeMillis() + time);
         } catch (Exception e) {
             log.error("ohc cache put error", e);
             return false;
@@ -53,6 +54,7 @@ public class OhcHelper {
 
     /**
      * 获取缓存值
+     *
      * @param k 键
      * @return 值
      */

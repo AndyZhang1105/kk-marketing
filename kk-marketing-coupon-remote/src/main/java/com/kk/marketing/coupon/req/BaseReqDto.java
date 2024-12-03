@@ -1,6 +1,5 @@
 package com.kk.marketing.coupon.req;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class BaseReqDto implements Serializable {
 
-    @NotNull(message = "租户id不能为空")
     private Long tenantId;
 
 }

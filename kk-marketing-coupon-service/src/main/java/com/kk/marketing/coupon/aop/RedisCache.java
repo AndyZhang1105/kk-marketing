@@ -5,13 +5,16 @@ import java.lang.annotation.*;
 /**
  * @author Zal
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
 @Documented
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface RedisCache {
 
     String key() default "";
 
-    long ttl() default 60; // 默认缓存时间60秒
+    /**
+     * 单位是毫秒, 默认缓存时间60秒
+     */
+    long ttl() default 60 * 1000;
 
 }
