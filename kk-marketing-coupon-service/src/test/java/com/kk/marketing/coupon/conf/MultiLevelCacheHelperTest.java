@@ -44,7 +44,7 @@ public class MultiLevelCacheHelperTest {
     void listCouponTest() {
         PageReqVo<CouponQueryReqDto> pageReqVo = PageReqVo.of(1, 2, CouponQueryReqDto.builder().build());
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             long start = System.currentTimeMillis();
             final String key = MultiLevelCacheHelper.generateKey(pageReqVo);
             ResponseData<PageRespVo<CouponVo>> responseData = (ResponseData<PageRespVo<CouponVo>>) MultiLevelCacheHelper.get(key, 100, () -> couponCrudRemote.queryPage(pageReqVo));
