@@ -2,23 +2,25 @@ package com.kk.marketing.coupon.mq;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.Message;
+import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;
 
 /**
  * @author Zal
  */
-@Configuration
+@Component
 @Slf4j
 public class MqConsumer {
 
     @Bean
-    public Consumer<Message<String>> consumer() {
-        return msg -> {
-            log.info(Thread.currentThread().getName() + " Consumer Receive New Messages: " + msg.getPayload());
-        };
+    public Consumer<String> broadcastConsumer() {
+        return message -> System.out.println("Regular Consumer Received from Topic 2: " + message);
+    }
+
+    @Bean
+    public Consumer<String> squareConsumer() {
+        return message -> System.out.println("Square Consumer Received from Topic 1: " + message);
     }
 
 }
