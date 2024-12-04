@@ -5,6 +5,7 @@ import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
 import com.kk.arch.common.util.*;
 import com.kk.arch.common.vo.ResponseData;
 import com.kk.marketing.coupon.aop.DistributedLock;
+import com.kk.marketing.coupon.conf.MqHelper;
 import com.kk.marketing.coupon.entity.Coupon;
 import com.kk.marketing.coupon.entity.CouponUser;
 import com.kk.marketing.coupon.enums.ActiveStatusEnum;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.kk.marketing.coupon.constant.BusinessConstants.BINDING_NAME_ASYNC_DISTRIBUTE_COUPON;
 import static com.kk.marketing.coupon.req.CouponDistributionReqDto.MODE_TOLERANT;
 
 /**
@@ -63,9 +65,10 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
 
         final List<Long> couponIdList = reqDto.getCouponList().stream().map(CouponDistributeDetailReqDto::getCouponId).distinct().toList();
         final Map<Long, Integer> couponStockMap = couponDataRemote.getCouponStockMap(reqDto.getTenantId(), couponIdList);
-        for (CouponDistributeDetailReqDto distributeCouponReqDto : reqDto.getCouponList()) {
-            final int shouldDistributeCouponNum = distributeCouponReqDto.getNum() * reqDto.getUserIdList().size();
-            AssertUtils.isTrue(Optional.ofNullable(couponStockMap.get(distributeCouponReqDto.getCouponId())).orElse(0) >= shouldDistributeCouponNum, "券[" + distributeCouponReqDto.getCouponId() + "]库存不足，发券失败");
+        for (CouponDistributeDetailReqDto couponReq : reqDto.getCouponList()) {
+            final int shouldDistributeCouponNum = couponReq.getNum() * reqDto.getUserIdList().size();
+            AssertUtils.isTrue(couponStockMap.get(couponReq.getCouponId()) != null, "券[" + couponReq.getCouponId() + "]不存在，发券失败");
+            AssertUtils.isTrue(Optional.ofNullable(couponStockMap.get(couponReq.getCouponId())).orElse(0) >= shouldDistributeCouponNum, "券[" + couponReq.getCouponId() + "]库存不足，发券失败");
         }
     }
 
@@ -173,7 +176,7 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
         this.deductStock(reqDto);
 
         // 4. 发送mq
-        // mqService.send(reqDto);
+        MqHelper.sendMsg(BINDING_NAME_ASYNC_DISTRIBUTE_COUPON, reqDto);
 
         return ResponseUtils.success(true);
     }

@@ -1,18 +1,20 @@
 package com.kk.marketing.coupon.conf;
 
-import com.kk.arch.common.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageConst;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
+
+import static com.kk.arch.common.constants.CommonConstants.TENANT_ID;
 
 /**
  * @author Zal
@@ -21,21 +23,20 @@ import java.util.UUID;
 @Slf4j
 public class MqHelper {
 
-    @Autowired
-    private StreamBridge streamBridge;
+    public static void sendMsg(String bindingName, Object object) {
+        if(Objects.isNull(object)) {
+            return;
+        }
 
-    public static String BINDING_NAME_BROADCAST = "producer-out-0";
-    public static String BINDING_NAME_SQUARE = "squareProducer-out-0";
-
-    public void sendMsg(String bindingName, Object object) {
-        final String jsonMsg = JsonUtils.toJsonString(object);
+        GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer();
+        byte[] bytes = genericJackson2JsonRedisSerializer.serialize(object);
 
         Map<String, Object> headers = new HashMap<>();
         headers.put(MessageConst.PROPERTY_KEYS, UUID.randomUUID().toString());
-        headers.put(MessageConst.PROPERTY_ORIGIN_MESSAGE_ID, TenantContextHolder.getTenantId());
+        headers.put(TENANT_ID, TenantContextHolder.getTenantId());
 
-        Message<String> msg = new GenericMessage<String>(jsonMsg, headers);
-        streamBridge.send(bindingName, msg);
+        Message<byte[]> msg = new GenericMessage<byte[]>(Objects.requireNonNull(bytes), headers);
+        Objects.requireNonNull(ApplicationContextHelper.getBean(StreamBridge.class)).send(bindingName, msg);
     }
 
     // @Bean
@@ -47,7 +48,7 @@ public class MqHelper {
                 headers.put(MessageConst.PROPERTY_KEYS, key);
                 headers.put(MessageConst.PROPERTY_ORIGIN_MESSAGE_ID, i);
                 Message<String> msg = new GenericMessage<String>("Hello RocketMQ " + i, headers);
-                streamBridge.send("producer-out-0", msg);
+                Objects.requireNonNull(ApplicationContextHelper.getBean(StreamBridge.class)).send("producer-out-0", msg);
             }
         };
     }
@@ -61,7 +62,7 @@ public class MqHelper {
                 headers.put(MessageConst.PROPERTY_KEYS, key);
                 headers.put(MessageConst.PROPERTY_ORIGIN_MESSAGE_ID, i);
                 Message<String> msg = new GenericMessage<String>("Hello RocketMQ Square " + i, headers);
-                streamBridge.send("squareProducer-out-0", msg);
+                Objects.requireNonNull(ApplicationContextHelper.getBean(StreamBridge.class)).send("squareProducer-out-0", msg);
             }
         };
     }

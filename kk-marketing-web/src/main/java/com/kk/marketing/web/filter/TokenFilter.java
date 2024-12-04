@@ -3,6 +3,7 @@ package com.kk.marketing.web.filter;
 import com.kk.gateway.auth.dto.UserDto;
 import com.kk.gateway.auth.remote.UserTokenService;
 import com.kk.marketing.web.conf.UserContextHolder;
+import io.vavr.control.Try;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,14 +43,14 @@ public class TokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        UserDto user = userTokenService.getUserByToken(token);
-        if (user == null) {
+        Try<UserDto> user = Try.of(() -> userTokenService.getUserByToken(token));
+        if (user.isFailure() || user.isEmpty()) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().write("Token is invalid");
             return;
         }
 
-        UserContextHolder.setUser(user);
+        UserContextHolder.setUser(user.get());
         try {
             filterChain.doFilter(request, response);
         } finally {

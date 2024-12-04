@@ -33,8 +33,10 @@ public class CouponDataRemoteImpl implements CouponDataRemote {
 
         Map<Long, Integer> resultMap = Maps.newHashMap();
         Optional.ofNullable(couponIdList).orElse(Collections.emptyList()).forEach(o -> {
-            final int stock = Optional.ofNullable(couponMap.get(o)).map(Coupon::getNumberTotal).orElse(0) - Optional.ofNullable(couponDataMap.get(o)).map(CouponData::getNumberDistributed).orElse(0);
-            resultMap.put(o, Math.max(stock, 0));
+            if(couponMap.get(o) != null) {
+                final int stock = Optional.ofNullable(couponMap.get(o)).map(Coupon::getNumberTotal).orElse(0) - Optional.ofNullable(couponDataMap.get(o)).map(CouponData::getNumberDistributed).orElse(0);
+                resultMap.put(o, Math.max(stock, 0));
+            }
         });
         return resultMap;
     }

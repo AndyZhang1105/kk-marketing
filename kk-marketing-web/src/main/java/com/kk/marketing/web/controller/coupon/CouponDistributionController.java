@@ -53,4 +53,24 @@ public class CouponDistributionController extends BaseController {
         return responseData.getCode() == ResponseData.SUCCESS ? ResponseUtils.success(true) : ResponseUtils.fail(responseData.getMsg());
     }
 
+    @PostMapping("/asyncDistributeCoupon")
+    public ResponseData<Boolean> asyncDistributeCoupon(@RequestBody @Validated DistributeCouponReqVo reqVo) {
+        AssertUtils.isNotNull(reqVo.getSourceStoreId(), "发券门店id不能为空");
+        CouponDistributionReqDto reqDto = CouponDistributionReqDto.builder()
+                                                                  .couponList(JsonUtils.toList(reqVo.getCouponList(), CouponDistributeDetailReqDto.class))
+                                                                  .userIdList(reqVo.getUserIdList())
+                                                                  .mode(MODE_STRICT)
+                                                                  .tenantId(getTenantId())
+                                                                  .sourceActivityType(0)
+                                                                  .sourceActivityId(0)
+                                                                  .sourceActivityName("")
+                                                                  .sourceOrderNbr("")
+                                                                  .sourceStoreId(reqVo.getSourceStoreId())
+                                                                  .sourceStoreName(getStoreName(reqVo.getSourceStoreId()))
+                                                                  .operatorId(0L)
+                                                                  .build();
+        ResponseData<Boolean> responseData = couponDistributionRemote.asyncDistributeCoupon(reqDto);
+        return responseData.getCode() == ResponseData.SUCCESS ? ResponseUtils.success(true) : ResponseUtils.fail(responseData.getMsg());
+    }
+
 }
