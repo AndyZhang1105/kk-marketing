@@ -137,7 +137,7 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
      */
     @Override
     @Transactional
-    @DistributedLock(key = "'syncDistributeCoupon_'+#reqDto.getTenantId()")
+    @DistributedLock(key = "syncDistributeCoupon")
     public ResponseData<List<DistributeCouponUserRespDto>> syncDistributeCoupon(CouponDistributionReqDto reqDto) {
         // 1. 先检查参数
         final long couponIdCount = reqDto.getCouponList().stream().map(CouponDistributeDetailReqDto::getCouponId).distinct().count();
@@ -163,7 +163,7 @@ public class CouponDistributeRemoteImpl implements CouponDistributionRemote {
      */
     @Override
     @Transactional
-    @DistributedLock(key = "'syncDistributeCoupon_'+#reqDto.getTenantId()")
+    @DistributedLock(key = "'asyncDistributeCoupon_'+#reqDto.tenantId")
     public ResponseData<Boolean> asyncDistributeCoupon(CouponDistributionReqDto reqDto) {
         // 1. 先检查参数
         final long couponIdCount = reqDto.getCouponList().stream().map(CouponDistributeDetailReqDto::getCouponId).distinct().count();

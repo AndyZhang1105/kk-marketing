@@ -1,7 +1,7 @@
 package com.kk.marketing.coupon.aop;
 
 import com.kk.arch.common.util.AspectUtils;
-import lombok.RequiredArgsConstructor;
+import com.kk.marketing.coupon.conf.TenantContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -23,7 +24,7 @@ import static java.lang.Thread.sleep;
  */
 @Slf4j
 @Aspect
-@RequiredArgsConstructor
+@Component
 public class DistributedLockAspect {
 
     private static final String REMOVE_IF_VAL = "if (redis.call('GET', KEYS[1]) == ARGV[1]) then return redis.call('DEL', KEYS[1]) else return 0 end";
@@ -58,8 +59,8 @@ public class DistributedLockAspect {
      * 根据注解参数生成redis key
      */
     private String generateKey(ProceedingJoinPoint joinPoint, DistributedLock distributedLock) {
-        String key = AspectUtils.buildTemplate(joinPoint, distributedLock.key(), distributedLock.args());
-        return Optional.ofNullable(key).orElseThrow(() -> new RuntimeException("缓存key不能为空"));
+        String key = TenantContextHolder.getTenantId() + "_" + AspectUtils.buildTemplate(joinPoint, "%s", new String[]{distributedLock.key()});
+        return Optional.of(key).orElseThrow(() -> new RuntimeException("缓存key不能为空"));
     }
 
     /**
