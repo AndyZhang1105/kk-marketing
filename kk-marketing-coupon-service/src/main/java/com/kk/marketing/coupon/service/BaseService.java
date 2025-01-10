@@ -1,8 +1,8 @@
 package com.kk.marketing.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.kk.arch.common.vo.PageReqVo;
-import com.kk.arch.common.vo.PageRespVo;
+import com.kk.arch.dubbo.remote.vo.PageReqVo;
+import com.kk.arch.dubbo.remote.vo.PageRespVo;
 
 import java.util.List;
 import java.util.Map;

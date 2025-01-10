@@ -1,6 +1,6 @@
 package com.kk.marketing.coupon.remote;
 
-import com.kk.arch.common.vo.ResponseData;
+import com.kk.arch.dubbo.remote.vo.ResponseData;
 import com.kk.marketing.coupon.req.CouponDistributionReqDto;
 import com.kk.marketing.coupon.resp.DistributeCouponUserRespDto;
 

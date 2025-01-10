@@ -1,6 +1,7 @@
 package com.kk.marketing.coupon.conf;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.kk.arch.dubbo.common.conf.TenantContextHolder;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @author Zal
  */
 @Component
-public class MybatisPlusTenantHandler implements TenantLineHandler {
+public class MyBatisPlusTenantHandler implements TenantLineHandler {
 
     @Override
     public Expression getTenantId() {

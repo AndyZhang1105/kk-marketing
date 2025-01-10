@@ -1,8 +1,8 @@
 package com.kk.marketing.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.kk.arch.common.vo.PageReqVo;
-import com.kk.arch.common.vo.PageRespVo;
+import com.kk.arch.dubbo.remote.vo.PageReqVo;
+import com.kk.arch.dubbo.remote.vo.PageRespVo;
 import com.kk.marketing.coupon.entity.CouponUser;
 import com.kk.marketing.coupon.vo.CouponUserVo;
 
@@ -22,4 +22,8 @@ public interface CouponUserService extends IService<CouponUser> {
     Map<Long, CouponUser> queryMap(Long tenantId, List<Long> idList);
 
     PageRespVo<CouponUser> queryPage(PageReqVo<CouponUser> pageReqVo);
+
+    List<CouponUser> listCanConsumeCouponUser(Long userId);
+
+    Map<String, CouponUser> queryMap(List<String> couponCodeList);
 }

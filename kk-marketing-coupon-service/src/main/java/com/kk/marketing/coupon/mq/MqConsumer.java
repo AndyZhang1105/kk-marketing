@@ -1,6 +1,6 @@
 package com.kk.marketing.coupon.mq;
 
-import com.kk.marketing.coupon.conf.TenantContextHolder;
+import com.kk.arch.dubbo.common.conf.TenantContextHolder;
 import com.kk.marketing.coupon.remote.CouponDistributionRemote;
 import com.kk.marketing.coupon.req.CouponDistributionReqDto;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import static com.kk.arch.common.constants.CommonConstants.TENANT_ID;
+import static com.kk.arch.dubbo.common.constant.CommonConstants.TENANT_ID;
+
 
 /**
  * @author Zal

@@ -1,12 +1,12 @@
 package com.kk.marketing.coupon.filter;
 
-import com.kk.arch.common.util.AssertUtils;
-import com.kk.marketing.coupon.conf.TenantContextHolder;
+import com.kk.arch.dubbo.common.conf.TenantContextHolder;
+import com.kk.arch.dubbo.common.util.AssertUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 
-import static com.kk.arch.common.constants.CommonConstants.TENANT_ID;
+import static com.kk.arch.dubbo.common.constant.CommonConstants.TENANT_ID;
 import static org.apache.dubbo.common.constants.CommonConstants.CONSUMER;
 import static org.apache.dubbo.common.constants.CommonConstants.PROVIDER;
 

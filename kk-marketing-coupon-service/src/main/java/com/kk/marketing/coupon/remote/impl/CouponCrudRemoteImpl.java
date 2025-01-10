@@ -1,12 +1,12 @@
 package com.kk.marketing.coupon.remote.impl;
 
-import com.kk.arch.common.util.AssertUtils;
-import com.kk.arch.common.util.JsonUtils;
-import com.kk.arch.common.util.ResponseUtils;
-import com.kk.arch.common.vo.PageReqVo;
-import com.kk.arch.common.vo.PageRespVo;
-import com.kk.arch.common.vo.ResponseData;
-import com.kk.marketing.coupon.aop.MultiLevelCache;
+import com.kk.arch.dubbo.common.aop.MultiLevelCache;
+import com.kk.arch.dubbo.common.util.AssertUtils;
+import com.kk.arch.dubbo.common.util.JsonUtils;
+import com.kk.arch.dubbo.common.util.ResponseUtils;
+import com.kk.arch.dubbo.remote.vo.PageReqVo;
+import com.kk.arch.dubbo.remote.vo.PageRespVo;
+import com.kk.arch.dubbo.remote.vo.ResponseData;
 import com.kk.marketing.coupon.entity.Coupon;
 import com.kk.marketing.coupon.enums.ActiveStatusEnum;
 import com.kk.marketing.coupon.enums.PeriodTypeEnum;

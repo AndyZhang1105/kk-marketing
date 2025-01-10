@@ -1,10 +1,10 @@
 package com.kk.marketing.web.controller.coupon;
 
-import com.kk.arch.common.util.CollectionUtils;
-import com.kk.arch.common.util.JsonUtils;
-import com.kk.arch.common.vo.PageReqVo;
-import com.kk.arch.common.vo.PageRespVo;
-import com.kk.arch.common.vo.ResponseData;
+import com.kk.arch.dubbo.common.util.CollectionUtils;
+import com.kk.arch.dubbo.common.util.JsonUtils;
+import com.kk.arch.dubbo.remote.vo.PageReqVo;
+import com.kk.arch.dubbo.remote.vo.PageRespVo;
+import com.kk.arch.dubbo.remote.vo.ResponseData;
 import com.kk.marketing.coupon.remote.CouponCrudRemote;
 import com.kk.marketing.coupon.req.ActiveStatusUpdateReqDto;
 import com.kk.marketing.coupon.req.CouponAddReqDto;

@@ -1,7 +1,7 @@
 package com.kk.marketing.web.conf;
 
-import com.kk.arch.common.exception.BusinessException;
-import com.kk.arch.common.vo.ResponseData;
+import com.kk.arch.dubbo.remote.exception.BusinessException;
+import com.kk.arch.dubbo.remote.vo.ResponseData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.kk.arch.common.util.AssertUtils.ERROR_CODE;
+import static com.kk.arch.dubbo.common.util.AssertUtils.ERROR_CODE;
 
 /**
  * @author Zal

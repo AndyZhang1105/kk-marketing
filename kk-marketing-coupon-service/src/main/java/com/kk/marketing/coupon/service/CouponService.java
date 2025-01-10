@@ -1,7 +1,7 @@
 package com.kk.marketing.coupon.service;
 
-import com.kk.arch.common.vo.PageReqVo;
-import com.kk.arch.common.vo.PageRespVo;
+import com.kk.arch.dubbo.remote.vo.PageReqVo;
+import com.kk.arch.dubbo.remote.vo.PageRespVo;
 import com.kk.marketing.coupon.entity.Coupon;
 import com.kk.marketing.coupon.req.CouponQueryReqDto;
 

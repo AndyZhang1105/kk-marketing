@@ -1,8 +1,10 @@
 package com.kk.marketing.coupon.conf;
 
-import com.kk.arch.common.vo.PageReqVo;
-import com.kk.arch.common.vo.PageRespVo;
-import com.kk.arch.common.vo.ResponseData;
+import com.arch.dubbo.common.conf.MultiLevelCacheHelper;
+import com.arch.dubbo.common.conf.TenantContextHolder;
+import com.kk.arch.dubbo.remote.vo.PageReqVo;
+import com.kk.arch.dubbo.remote.vo.PageRespVo;
+import com.kk.arch.dubbo.remote.vo.ResponseData;
 import com.kk.marketing.coupon.remote.CouponCrudRemote;
 import com.kk.marketing.coupon.req.CouponQueryReqDto;
 import com.kk.marketing.coupon.vo.CouponVo;
@@ -21,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.*;
 
-import static com.kk.arch.common.constants.CommonConstants.TENANT_ID;
+import static com.arch.dubbo.common.constant.CommonConstants.TENANT_ID;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest()

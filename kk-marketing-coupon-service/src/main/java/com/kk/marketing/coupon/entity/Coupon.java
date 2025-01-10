@@ -57,7 +57,7 @@ public class Coupon extends BaseEntity {
     private Integer useScope;
 
     @Schema(description = "可用门店类型，0全部门店，1部分门店")
-    private Boolean storeType;
+    private Integer storeType;
 
     @Schema(description = "券可用时间类型，0固定时段，1自领取后按天算")
     private Integer usableTimeType;
@@ -85,8 +85,8 @@ public class Coupon extends BaseEntity {
     @Schema(description = "可使用的时间段列表，逗号隔开")
     private String periodTimeSegments;
 
-    @Schema(description = "活动可与优惠券共享优惠，逗号隔开")
-    private String shareableActivities;
+    @Schema(description = "活动类型可与优惠券共享优惠，逗号隔开")
+    private String shareActivityTypes;
 
     @Schema(description = "是否可转赠，1可，0不可")
     private Integer isTransferable;

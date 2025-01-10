@@ -3,20 +3,22 @@ package com.kk.marketing.coupon.service.impl;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.kk.arch.common.util.JsonUtils;
-import com.kk.arch.common.vo.PageReqVo;
-import com.kk.arch.common.vo.PageRespVo;
+import com.google.common.collect.Maps;
+import com.kk.arch.dubbo.common.util.CollectionUtils;
+import com.kk.arch.dubbo.common.util.DateUtils;
+import com.kk.arch.dubbo.common.util.JsonUtils;
+import com.kk.arch.dubbo.remote.vo.PageReqVo;
+import com.kk.arch.dubbo.remote.vo.PageRespVo;
 import com.kk.marketing.coupon.entity.CouponUser;
+import com.kk.marketing.coupon.enums.CouponUserStatusEnum;
 import com.kk.marketing.coupon.mapper.CouponUserMapper;
 import com.kk.marketing.coupon.service.CouponUserService;
 import com.kk.marketing.coupon.vo.CouponUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class CouponUserServiceImpl extends ServiceImpl<CouponUserMapper, CouponUser> implements CouponUserService {
+
+    @Value("${sql.select.limit:100}")
+    private int sqlSelectLimit;
 
     @Autowired
     private CouponUserMapper couponUserMapper;
@@ -60,6 +65,29 @@ public class CouponUserServiceImpl extends ServiceImpl<CouponUserMapper, CouponU
         final CouponUser couponUser = JsonUtils.toObject(pageReqVo.getParam(), CouponUser.class);
         List<CouponUser> resultList = couponUserMapper.queryPage(page, couponUser);
         return new PageRespVo<>(page.getTotal(), page.getCurrent(), page.getSize(), resultList);
+    }
+
+    @Override
+    public List<CouponUser> listCanConsumeCouponUser(Long userId) {
+        Date now = DateUtils.getNow();
+        return new LambdaQueryChainWrapper<>(couponUserMapper)
+                .eq(CouponUser::getUserId, userId)
+                .eq(CouponUser::getStatus, CouponUserStatusEnum.UNUSED.getCode())
+                .ge(CouponUser::getUsableStartTime, now)
+                .le(CouponUser::getUsableEndTime, now)
+                .last("limit " + sqlSelectLimit)
+                .list();
+    }
+
+    @Override
+    public Map<String, CouponUser> queryMap(List<String> couponCodeList) {
+        if(CollectionUtils.isEmpty(couponCodeList)) {
+            return Maps.newHashMap();
+        }
+        List<CouponUser> couponUserList = new LambdaQueryChainWrapper<>(couponUserMapper)
+                .in(CouponUser::getCouponCode, couponCodeList)
+                .list();
+        return couponUserList.stream().collect(Collectors.toMap(CouponUser::getCouponCode, Function.identity(), (f, s) -> f));
     }
 
 }

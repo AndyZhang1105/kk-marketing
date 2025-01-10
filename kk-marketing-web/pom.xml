@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.kk.arch</groupId>
-        <artifactId>kk-arch-dubbo-web</artifactId>
+        <artifactId>kk-arch-dubbo-web-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
@@ -29,6 +29,12 @@
             <groupId>com.kk.marketing</groupId>
             <artifactId>kk-marketing-coupon-remote</artifactId>
             <version>${marketing-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kk.arch</groupId>
+            <artifactId>kk-arch-dubbo-web-dependency</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>

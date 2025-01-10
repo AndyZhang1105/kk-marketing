@@ -15,7 +15,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static com.kk.arch.common.constants.CommonConstants.HEADER_TOKEN;
+import static com.kk.arch.dubbo.common.constant.CommonConstants.HEADER_TOKEN;
+
 
 /**
  * @author Zal

@@ -2,9 +2,9 @@ package com.kk.marketing.coupon.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.shaded.com.google.common.collect.Sets;
-import com.kk.arch.common.exception.BusinessException;
-import com.kk.arch.common.util.JsonUtils;
-import com.kk.arch.common.util.ResponseUtils;
+import com.kk.arch.dubbo.common.util.JsonUtils;
+import com.kk.arch.dubbo.common.util.ResponseUtils;
+import com.kk.arch.dubbo.remote.exception.BusinessException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

@@ -19,14 +19,14 @@ import javax.sql.DataSource;
  * @author Zal
  */
 @Configuration
-@MapperScan(basePackages = {"com.kk.marketing.coupon.mapper"})
+@MapperScan(basePackages = {"com.kk.*.*.mapper"})
 public class MyBatisPlusConfig {
 
     @Value("${mybatis.page.size:500}")
     private long pageSize;
 
     @Autowired
-    private MybatisPlusTenantHandler mybatisPlusTenantHandler;
+    private MyBatisPlusTenantHandler mybatisPlusTenantHandler;
 
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {

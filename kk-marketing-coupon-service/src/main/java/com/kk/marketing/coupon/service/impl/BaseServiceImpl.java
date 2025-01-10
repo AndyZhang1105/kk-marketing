@@ -7,11 +7,11 @@ import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.UpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.kk.arch.common.util.AssertUtils;
-import com.kk.arch.common.util.JsonUtils;
-import com.kk.arch.common.util.StringUtils;
-import com.kk.arch.common.vo.PageReqVo;
-import com.kk.arch.common.vo.PageRespVo;
+import com.kk.arch.dubbo.common.util.AssertUtils;
+import com.kk.arch.dubbo.common.util.JsonUtils;
+import com.kk.arch.dubbo.common.util.StringUtils;
+import com.kk.arch.dubbo.remote.vo.PageReqVo;
+import com.kk.arch.dubbo.remote.vo.PageRespVo;
 import com.kk.marketing.coupon.service.BaseService;
 
 import java.util.Collections;
@@ -21,8 +21,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.kk.arch.common.constants.CommonConstants.NO;
-import static com.kk.arch.common.constants.CommonConstants.YES;
+import static com.kk.arch.dubbo.common.constant.CommonConstants.NO;
+import static com.kk.arch.dubbo.common.constant.CommonConstants.YES;
 
 
 /**
