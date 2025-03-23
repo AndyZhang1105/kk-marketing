@@ -3,11 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.kk.arch</groupId>
-        <artifactId>kk-arch</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-    </parent>
 
     <groupId>com.kk.marketing</groupId>
     <artifactId>kk-marketing</artifactId>
@@ -27,5 +22,20 @@
         <revision>1.0.1-SNAPSHOT</revision>
         <arch.version>1.0.0-SNAPSHOT</arch.version>
     </properties>
+
+    <dependencyManagement>
+
+        <dependencies>
+            <!-- 导入BOM -->
+            <dependency>
+                <groupId>com.kk.arch</groupId>
+                <artifactId>kk-arch-bom-dependencies</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
 
 </project>

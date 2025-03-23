@@ -1,13 +1,13 @@
 package com.kk.marketing.web.filter;
 
-import com.kk.arch.dubbo.common.conf.UserContextHolder;
+import com.kk.arch.common.conf.UserContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 
 import java.util.Arrays;
 
-import static com.kk.arch.dubbo.common.constant.CommonConstants.TENANT_ID;
+import static com.kk.arch.common.constant.CommonConstants.TENANT_ID;
 import static org.apache.dubbo.common.constants.CommonConstants.CONSUMER;
 import static org.apache.dubbo.common.constants.CommonConstants.PROVIDER;
 

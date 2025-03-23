@@ -22,20 +22,6 @@
         <argLine>-Dfile.encoding=UTF-8</argLine>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-
-            <dependency>
-                <groupId>com.kk.arch</groupId>
-                <artifactId>kk-arch</artifactId>
-                <version>${arch.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
 
         <dependency>
@@ -54,7 +40,6 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
-            <version>2023.0.1.2</version>
         </dependency>
 
     </dependencies>

@@ -1,7 +1,7 @@
 package com.kk.marketing.web.controller;
 
 
-import com.kk.arch.dubbo.common.conf.UserContextHolder;
+import com.kk.arch.common.conf.UserContextHolder;
 
 /**
  * @author Zal

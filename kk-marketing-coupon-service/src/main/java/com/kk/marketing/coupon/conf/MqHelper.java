@@ -1,7 +1,7 @@
 package com.kk.marketing.coupon.conf;
 
-import com.kk.arch.dubbo.common.conf.ApplicationContextHelper;
-import com.kk.arch.dubbo.common.conf.TenantContextHolder;
+import com.kk.arch.common.conf.ApplicationContextHelper;
+import com.kk.arch.common.conf.TenantContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageConst;
 import org.springframework.boot.ApplicationRunner;
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import static com.kk.arch.dubbo.common.constant.CommonConstants.TENANT_ID;
+import static com.kk.arch.common.constant.CommonConstants.TENANT_ID;
 
 /**
  * @author Zal

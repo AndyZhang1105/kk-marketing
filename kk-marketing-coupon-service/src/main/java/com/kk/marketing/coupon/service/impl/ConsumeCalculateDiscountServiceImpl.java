@@ -1,7 +1,7 @@
 package com.kk.marketing.coupon.service.impl;
 
-import com.kk.arch.dubbo.common.util.AssertUtils;
-import com.kk.arch.dubbo.common.util.CollectionUtils;
+import com.kk.arch.common.util.AssertUtils;
+import com.kk.arch.common.util.CollectionUtils;
 import com.kk.arch.remote.exception.BusinessException;
 import com.kk.arch.remote.vo.ResponseData;
 import com.kk.marketing.coupon.adapter.ProductQueryAdapter;
@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.kk.arch.dubbo.common.constant.CommonConstants.NO;
-import static com.kk.arch.dubbo.common.constant.CommonConstants.YES;
+import static com.kk.arch.common.constant.CommonConstants.NO;
+import static com.kk.arch.common.constant.CommonConstants.YES;
 
 /**
  * @author Zal

@@ -1,9 +1,9 @@
 package com.kk.marketing.coupon.remote.impl;
 
-import com.kk.arch.dubbo.common.aop.MultiLevelCache;
-import com.kk.arch.dubbo.common.util.AssertUtils;
-import com.kk.arch.dubbo.common.util.JsonUtils;
-import com.kk.arch.dubbo.common.util.ResponseUtils;
+import com.kk.arch.common.aop.MultiLevelCache;
+import com.kk.arch.common.util.AssertUtils;
+import com.kk.arch.common.util.JsonUtils;
+import com.kk.arch.common.util.ResponseUtils;
 import com.kk.arch.remote.vo.PageReqVo;
 import com.kk.arch.remote.vo.PageRespVo;
 import com.kk.arch.remote.vo.ResponseData;

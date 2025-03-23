@@ -2,8 +2,8 @@ package com.kk.marketing.coupon.remote.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
-import com.kk.arch.dubbo.common.aop.DistributedLock;
-import com.kk.arch.dubbo.common.util.*;
+import com.kk.arch.common.aop.DistributedLock;
+import com.kk.arch.common.util.*;
 import com.kk.arch.remote.vo.ResponseData;
 import com.kk.marketing.coupon.conf.MqHelper;
 import com.kk.marketing.coupon.entity.Coupon;

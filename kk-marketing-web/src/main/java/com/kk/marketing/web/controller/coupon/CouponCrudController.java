@@ -1,7 +1,7 @@
 package com.kk.marketing.web.controller.coupon;
 
-import com.kk.arch.dubbo.common.util.CollectionUtils;
-import com.kk.arch.dubbo.common.util.JsonUtils;
+import com.kk.arch.common.util.CollectionUtils;
+import com.kk.arch.common.util.JsonUtils;
 import com.kk.arch.remote.vo.PageReqVo;
 import com.kk.arch.remote.vo.PageRespVo;
 import com.kk.arch.remote.vo.ResponseData;

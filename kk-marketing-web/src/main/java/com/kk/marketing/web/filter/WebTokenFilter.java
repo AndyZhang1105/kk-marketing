@@ -1,6 +1,6 @@
 package com.kk.marketing.web.filter;
 
-import com.kk.arch.dubbo.common.conf.UserContextHolder;
+import com.kk.arch.common.conf.UserContextHolder;
 import com.kk.arch.remote.dto.UserDto;
 import com.kk.gateway.auth.remote.UserTokenService;
 import io.vavr.control.Try;
@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static com.kk.arch.dubbo.common.constant.CommonConstants.HEADER_TOKEN;
+import static com.kk.arch.common.constant.CommonConstants.HEADER_TOKEN;
 
 
 /**

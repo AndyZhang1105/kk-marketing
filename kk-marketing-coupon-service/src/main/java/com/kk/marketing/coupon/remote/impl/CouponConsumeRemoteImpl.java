@@ -2,7 +2,7 @@ package com.kk.marketing.coupon.remote.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.kk.arch.dubbo.common.util.*;
+import com.kk.arch.common.util.*;
 import com.kk.arch.remote.exception.BusinessException;
 import com.kk.arch.remote.vo.ResponseData;
 import com.kk.marketing.coupon.adapter.ProductQueryAdapter;

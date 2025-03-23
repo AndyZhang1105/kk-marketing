@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Maps;
-import com.kk.arch.dubbo.common.util.CollectionUtils;
-import com.kk.arch.dubbo.common.util.DateUtils;
-import com.kk.arch.dubbo.common.util.JsonUtils;
+import com.kk.arch.common.util.CollectionUtils;
+import com.kk.arch.common.util.DateUtils;
+import com.kk.arch.common.util.JsonUtils;
 import com.kk.arch.remote.vo.PageReqVo;
 import com.kk.arch.remote.vo.PageRespVo;
 import com.kk.marketing.coupon.entity.CouponUser;

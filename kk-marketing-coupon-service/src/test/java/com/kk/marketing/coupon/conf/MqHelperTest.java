@@ -1,6 +1,6 @@
 package com.kk.marketing.coupon.conf;
 
-import com.kk.arch.dubbo.common.conf.ApplicationContextHelper;
+import com.kk.arch.common.conf.ApplicationContextHelper;
 import com.kk.marketing.coupon.vo.CouponVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;

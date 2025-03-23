@@ -1,8 +1,8 @@
 package com.kk.marketing.web.controller.coupon;
 
-import com.kk.arch.dubbo.common.util.AssertUtils;
-import com.kk.arch.dubbo.common.util.JsonUtils;
-import com.kk.arch.dubbo.common.util.ResponseUtils;
+import com.kk.arch.common.util.AssertUtils;
+import com.kk.arch.common.util.JsonUtils;
+import com.kk.arch.common.util.ResponseUtils;
 import com.kk.arch.remote.vo.ResponseData;
 import com.kk.marketing.coupon.remote.CouponDistributionRemote;
 import com.kk.marketing.coupon.req.CouponDistributeDetailReqDto;

@@ -1,7 +1,7 @@
 package com.kk.marketing.coupon;
 
-import com.kk.arch.dubbo.common.conf.TenantContextHolder;
-import com.kk.arch.dubbo.common.util.CollectionUtils;
+import com.kk.arch.common.conf.TenantContextHolder;
+import com.kk.arch.common.util.CollectionUtils;
 import com.kk.marketing.coupon.entity.CouponVerifier;
 import com.kk.marketing.coupon.mapper.CouponVerifierMapper;
 import org.junit.jupiter.api.AfterAll;

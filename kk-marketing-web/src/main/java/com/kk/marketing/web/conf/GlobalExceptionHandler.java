@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.kk.arch.dubbo.common.util.AssertUtils.ERROR_CODE;
+import static com.kk.arch.common.util.AssertUtils.ERROR_CODE;
 
 /**
  * @author Zal
