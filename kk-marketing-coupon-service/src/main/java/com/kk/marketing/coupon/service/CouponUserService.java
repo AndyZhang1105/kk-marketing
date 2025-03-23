@@ -1,8 +1,8 @@
 package com.kk.marketing.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.kk.arch.dubbo.remote.vo.PageReqVo;
-import com.kk.arch.dubbo.remote.vo.PageRespVo;
+import com.kk.arch.remote.vo.PageReqVo;
+import com.kk.arch.remote.vo.PageRespVo;
 import com.kk.marketing.coupon.entity.CouponUser;
 import com.kk.marketing.coupon.vo.CouponUserVo;
 

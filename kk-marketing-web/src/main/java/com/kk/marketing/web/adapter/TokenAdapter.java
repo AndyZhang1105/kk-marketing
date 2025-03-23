@@ -1,7 +1,7 @@
 package com.kk.marketing.web.adapter;
 
 import com.kk.arch.dubbo.common.util.AssertUtils;
-import com.kk.gateway.auth.dto.UserDto;
+import com.kk.arch.remote.dto.UserDto;
 import com.kk.gateway.auth.remote.UserTokenService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TokenAdapter {
 
-    @DubboReference
+    @DubboReference(lazy = true)
     private UserTokenService userTokenService;
 
     public UserDto getUserByToken(String token) {

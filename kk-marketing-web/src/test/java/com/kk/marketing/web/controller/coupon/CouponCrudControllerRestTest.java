@@ -2,12 +2,12 @@ package com.kk.marketing.web.controller.coupon;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kk.arch.common.util.JsonUtils;
-import com.kk.arch.common.vo.PageReqVo;
-import com.kk.arch.common.vo.PageRespVo;
-import com.kk.arch.common.vo.ResponseData;
+import com.kk.arch.dubbo.common.util.JsonUtils;
+import com.kk.arch.remote.vo.PageReqVo;
+import com.kk.arch.remote.vo.PageRespVo;
+import com.kk.arch.remote.vo.ResponseData;
 import com.kk.marketing.coupon.vo.CouponVo;
-import com.kk.marketing.web.req.CouponQueryReqVo;
+import com.kk.marketing.web.controller.coupon.req.CouponQueryReqVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-import static com.kk.arch.common.constants.CommonConstants.HEADER_TOKEN;
-import static com.kk.arch.common.vo.ResponseData.SUCCESS;
+import static com.kk.arch.dubbo.common.constant.CommonConstants.HEADER_TOKEN;
+import static com.kk.arch.remote.vo.ResponseData.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 

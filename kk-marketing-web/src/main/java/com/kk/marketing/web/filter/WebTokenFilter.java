@@ -1,14 +1,15 @@
 package com.kk.marketing.web.filter;
 
-import com.kk.gateway.auth.dto.UserDto;
+import com.kk.arch.dubbo.common.conf.UserContextHolder;
+import com.kk.arch.remote.dto.UserDto;
 import com.kk.gateway.auth.remote.UserTokenService;
-import com.kk.marketing.web.conf.UserContextHolder;
 import io.vavr.control.Try;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,8 +23,9 @@ import static com.kk.arch.dubbo.common.constant.CommonConstants.HEADER_TOKEN;
  * @author Zal
  */
 @Component
-public class TokenFilter extends OncePerRequestFilter {
+public class WebTokenFilter extends OncePerRequestFilter {
 
+    @Lazy
     @DubboReference
     private UserTokenService userTokenService;
 

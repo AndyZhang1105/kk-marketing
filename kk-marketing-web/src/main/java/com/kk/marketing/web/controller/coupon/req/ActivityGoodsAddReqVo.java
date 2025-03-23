@@ -1,4 +1,4 @@
-package com.kk.marketing.web.req;
+package com.kk.marketing.web.controller.coupon.req;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -4,36 +4,28 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.kk.arch</groupId>
-        <artifactId>kk-arch-dubbo-remote-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath/>
+        <groupId>com.kk.marketing</groupId>
+        <artifactId>kk-marketing</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>com.kk.marketing</groupId>
     <artifactId>kk-marketing-coupon-remote</artifactId>
-    <version>${marketing-version}</version>
+    <version>${revision}</version>
     <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <marketing-version>1.0.0</marketing-version>
     </properties>
 
     <dependencies>
 
         <dependency>
             <groupId>com.kk.arch</groupId>
-            <artifactId>kk-arch-dubbo-remote-dependency</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations-jakarta</artifactId>
-            <version>2.2.19</version>
-            <scope>compile</scope>
+            <artifactId>kk-arch-remote-dependencies</artifactId>
+            <version>${arch.version}</version>
         </dependency>
 
     </dependencies>

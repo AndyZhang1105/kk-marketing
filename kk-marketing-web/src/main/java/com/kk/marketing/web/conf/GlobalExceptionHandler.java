@@ -1,7 +1,7 @@
 package com.kk.marketing.web.conf;
 
-import com.kk.arch.dubbo.remote.exception.BusinessException;
-import com.kk.arch.dubbo.remote.vo.ResponseData;
+import com.kk.arch.remote.exception.BusinessException;
+import com.kk.arch.remote.vo.ResponseData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

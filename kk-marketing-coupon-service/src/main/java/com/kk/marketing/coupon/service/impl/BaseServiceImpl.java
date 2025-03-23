@@ -10,8 +10,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.arch.dubbo.common.util.AssertUtils;
 import com.kk.arch.dubbo.common.util.JsonUtils;
 import com.kk.arch.dubbo.common.util.StringUtils;
-import com.kk.arch.dubbo.remote.vo.PageReqVo;
-import com.kk.arch.dubbo.remote.vo.PageRespVo;
+import com.kk.arch.remote.vo.PageReqVo;
+import com.kk.arch.remote.vo.PageRespVo;
 import com.kk.marketing.coupon.service.BaseService;
 
 import java.util.Collections;

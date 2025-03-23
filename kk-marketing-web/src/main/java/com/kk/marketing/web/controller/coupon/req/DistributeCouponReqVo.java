@@ -1,4 +1,4 @@
-package com.kk.marketing.web.req;
+package com.kk.marketing.web.controller.coupon.req;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;

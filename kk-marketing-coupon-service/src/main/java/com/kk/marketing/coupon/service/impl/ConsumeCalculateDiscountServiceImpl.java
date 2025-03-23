@@ -2,8 +2,8 @@ package com.kk.marketing.coupon.service.impl;
 
 import com.kk.arch.dubbo.common.util.AssertUtils;
 import com.kk.arch.dubbo.common.util.CollectionUtils;
-import com.kk.arch.dubbo.remote.exception.BusinessException;
-import com.kk.arch.dubbo.remote.vo.ResponseData;
+import com.kk.arch.remote.exception.BusinessException;
+import com.kk.arch.remote.vo.ResponseData;
 import com.kk.marketing.coupon.adapter.ProductQueryAdapter;
 import com.kk.marketing.coupon.entity.ActivityGoods;
 import com.kk.marketing.coupon.entity.ActivityStore;

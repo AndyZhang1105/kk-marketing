@@ -2,15 +2,15 @@ package com.kk.marketing.web.controller.coupon;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import com.kk.arch.common.vo.PageReqVo;
-import com.kk.marketing.web.req.CouponQueryReqVo;
+import com.kk.arch.remote.vo.PageReqVo;
+import com.kk.marketing.web.controller.coupon.req.CouponQueryReqVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static com.kk.arch.common.constants.CommonConstants.HEADER_TOKEN;
+import static com.kk.arch.dubbo.common.constant.CommonConstants.HEADER_TOKEN;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

@@ -1,1 +1,1 @@
-tenantFilter=com.kk.marketing.web.filter.TenantFilter
+tenantFilter=com.kk.marketing.web.filter.WebTenantFilter
