@@ -2,7 +2,7 @@ package com.kk.marketing.web.filter;
 
 import com.kk.arch.common.conf.UserContextHolder;
 import com.kk.arch.remote.dto.UserDto;
-import com.kk.gateway.auth.remote.UserTokenService;
+import com.kk.gateway.auth.remote.UserTokenRemote;
 import io.vavr.control.Try;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -27,7 +27,7 @@ public class WebTokenFilter extends OncePerRequestFilter {
 
     @Lazy
     @DubboReference
-    private UserTokenService userTokenService;
+    private UserTokenRemote userTokenRemote;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -46,7 +46,7 @@ public class WebTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        Try<UserDto> user = Try.of(() -> userTokenService.getUserByToken(token));
+        Try<UserDto> user = Try.of(() -> userTokenRemote.getUserByToken(token));
         if (user.isFailure() || user.isEmpty()) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().write("Token is invalid");
