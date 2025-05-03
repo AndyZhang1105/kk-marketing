@@ -11,8 +11,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDubbo
-@EnableDiscoveryClient
 @Slf4j
+@EnableDiscoveryClient
 public class MarketingWebApplication {
 
     public static void main(String[] args) {
